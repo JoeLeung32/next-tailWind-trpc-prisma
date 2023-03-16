@@ -3,10 +3,10 @@ import * as process from "process";
 
 export async function getServerSideProps(context) {
     const apiPath = `tutorials?fields=title,headline,publishedAt,scheduleToPublishAt`
-    const apiURL = `${process.env.apiUrl}${apiPath}`
+    const apiURL = `${process.env.API_URL}${apiPath}`
     const res = await fetch(apiURL, {
         headers: {
-            Authorization: `Bearer ${process.env.apiToken}`
+            Authorization: `Bearer ${process.env.API_TOKEN}`
         }
     })
     const data = await res.json()
