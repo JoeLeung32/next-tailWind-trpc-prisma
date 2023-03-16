@@ -1,2 +1,28 @@
 .page {
+    padding: 1rem
+}
+
+.loading {
+    background-color: #343434;
+    color: white;
+    padding: .5rem;
+}
+
+.input {
+    border: 1px solid #da3b90;
+    border-radius: 0.25rem;
+    padding: .5rem;
+}
+
+.btn {
+    background-color: #da3b90;
+    border-radius: 0.25rem;
+    color: white;
+    cursor: pointer;
+    padding: .5rem;
+}
+
+.url {
+    color: #da3b90;
+    text-decoration: underline;
 }
