@@ -51,7 +51,7 @@ export const postRouter = router({
                     }
                     : undefined,
                 orderBy: {
-                    published: 'desc',
+                    id: 'desc',
                 },
             });
             let nextCursor: typeof cursor | undefined = undefined;

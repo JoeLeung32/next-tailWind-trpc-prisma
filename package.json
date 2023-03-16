@@ -9,6 +9,7 @@
     "seed": "ts-node libs/prisma/seed.ts"
   },
   "dependencies": {
+    "@next/font": "13.1.1",
     "@nrwl/next": "15.8.6",
     "@prisma/client": "^4.11.0",
     "@tanstack/react-query": "^4.26.1",
