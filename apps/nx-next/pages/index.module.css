@@ -1,7 +1,0 @@
-.main {
-    @apply font-bold;
-    @apply text-3xl;
-    /*noinspection CssUnresolvedCustomProperty*/
-    font-family: var(--font-nunito);
-}
-
