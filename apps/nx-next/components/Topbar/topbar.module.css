@@ -1,6 +1,7 @@
 div.topbar {
     @apply bg-main;
 }
+
 div.topbar > div.wrapper {
     @apply m-auto;
     @apply flex;
@@ -9,7 +10,7 @@ div.topbar > div.wrapper {
     @apply justify-between;
     @apply items-center;
     @apply p-2;
-    @apply px-3;
+    @apply px-4;
     @apply overflow-hidden;
 }
 
@@ -20,10 +21,11 @@ div.logo {
     @apply uppercase;
     @apply leading-none;
     @apply tracking-wide;
-    color: white;
+    @apply text-white;
     /*noinspection CssUnresolvedCustomProperty*/
     font-family: var(--font-nunito);
 }
+
 @media screen(md) {
     div.logo {
         @apply font-extrabold;
@@ -31,12 +33,24 @@ div.logo {
     }
 }
 
-div.burgerMenuCom svg {
-    color: white;
+input.burgerMenuToggleObj,
+input.burgerMenuToggleObj ~ div.burgerMenuMob {
+    @apply hidden;
 }
-input.burgerMenuToggleObj {
-    display: none;
+
+input.burgerMenuToggleObj:checked ~ div.burgerMenuMob {
+    @apply flex;
 }
+
+div.burgerMenu div > a {
+    @apply select-none;
+    @apply font-bold;
+    @apply tracking-wide;
+    @apply text-white;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-nunito);
+}
+
 div.burgerMenuFull {
     @apply hidden;
     @apply md:flex;
@@ -45,6 +59,11 @@ div.burgerMenuFull {
     @apply items-center;
     @apply gap-5;
 }
+
+div.burgerMenuCom svg {
+    @apply text-white;
+}
+
 div.burgerMenuMob {
     @apply m-auto;
     @apply relative;
@@ -64,7 +83,7 @@ div.burgerMenuMob > div {
     @apply right-0;
 }
 
-div.burgerMenuMob > div > div {
+div.burgerMenuMob > div > a {
     @apply w-full;
     @apply text-center;
     @apply p-2;
@@ -72,25 +91,8 @@ div.burgerMenuMob > div > div {
     @apply hover:bg-premium;
 }
 
-input.burgerMenuToggleObj ~ div.burgerMenuMob {
-    display: none;
-}
-
-input.burgerMenuToggleObj:checked ~ div.burgerMenuMob {
-    display: flex;
-}
-
 @media screen(md) {
     div.burgerMenuMob {
-        display: none !important;
+        @apply hidden !important;
     }
-}
-
-div.burgerMenu div > a {
-    @apply select-none;
-    @apply font-bold;
-    color: white;
-    /*noinspection CssUnresolvedCustomProperty*/
-    /*font-family: var(--font-rubik);*/
-    font-family: var(--font-nunito);
 }

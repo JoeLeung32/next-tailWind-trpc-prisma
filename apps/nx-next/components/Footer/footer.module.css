@@ -2,7 +2,7 @@ div.container {
     @apply m-auto;
     @apply mt-5;
     @apply p-2;
-    @apply px-3;
+    @apply px-4;
 }
 
 div.brand {
