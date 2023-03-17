@@ -1,0 +1,49 @@
+div.container {
+    @apply m-auto;
+    @apply mt-5;
+    @apply p-2;
+    @apply px-3;
+}
+
+div.brand {
+    @apply select-none;
+    @apply bg-white;
+    @apply text-main;
+    @apply flex;
+    @apply flex-col;
+    @apply md:flex-row;
+    @apply gap-2;
+    @apply justify-between;
+    @apply items-center;
+    @apply overflow-hidden;
+}
+
+div.logo {
+    @apply font-black;
+    @apply text-xl;
+    @apply uppercase;
+    @apply leading-none;
+    @apply tracking-wide;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-nunito);
+}
+@media screen(md) {
+    div.logo {
+        @apply font-extrabold;
+        @apply text-3xl;
+    }
+}
+
+div.footer {
+    @apply select-none;
+    @apply text-base;
+    @apply tracking-wider;
+    @apply text-neutral-400;
+    @apply flex;
+    @apply flex-col;
+    @apply md:flex-row;
+    @apply justify-between;
+    @apply items-center;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-rubik);
+}

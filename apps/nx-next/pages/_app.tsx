@@ -1,9 +1,17 @@
+// -- Tailwind CSS
+import './styles.css'
+// -- Google Fonts
+import { inter, notoSansTC, nunito, rubik } from '../constants/fonts'
+// -- Fontawesome
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
+config.autoAddCss = false
+// -- React/Next
 import Head from 'next/head'
 import { AppProps } from 'next/app'
 import { trpc } from '../utils/trpc'
 import { SiteProvider } from '../contexts/site'
-import './styles.css'
-import { inter, notoSansTC, nunito, rubik } from '../constants/fonts'
 
 const fontGoogle = `${inter.variable} ${notoSansTC.variable} ${nunito.variable} ${rubik.variable}`
 

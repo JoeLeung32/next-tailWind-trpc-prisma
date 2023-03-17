@@ -1,0 +1,96 @@
+div.topbar {
+    @apply bg-main;
+}
+div.topbar > div.wrapper {
+    @apply m-auto;
+    @apply flex;
+    @apply flex-row;
+    @apply gap-2;
+    @apply justify-between;
+    @apply items-center;
+    @apply p-2;
+    @apply px-3;
+    @apply overflow-hidden;
+}
+
+div.logo {
+    @apply select-none;
+    @apply font-black;
+    @apply text-xl;
+    @apply uppercase;
+    @apply leading-none;
+    @apply tracking-wide;
+    color: white;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-nunito);
+}
+@media screen(md) {
+    div.logo {
+        @apply font-extrabold;
+        @apply text-3xl;
+    }
+}
+
+div.burgerMenuCom svg {
+    color: white;
+}
+input.burgerMenuToggleObj {
+    display: none;
+}
+div.burgerMenuFull {
+    @apply hidden;
+    @apply md:flex;
+    @apply flex-row;
+    @apply justify-end;
+    @apply items-center;
+    @apply gap-5;
+}
+div.burgerMenuMob {
+    @apply m-auto;
+    @apply relative;
+}
+
+div.burgerMenuMob > div {
+    @apply bg-main;
+    @apply flex;
+    @apply flex-col;
+    @apply justify-end;
+    @apply items-center;
+    @apply gap-2;
+    @apply w-auto;
+    @apply max-w-full;
+    @apply absolute;
+    @apply top-0;
+    @apply right-0;
+}
+
+div.burgerMenuMob > div > div {
+    @apply w-full;
+    @apply text-center;
+    @apply p-2;
+    @apply px-8;
+    @apply hover:bg-premium;
+}
+
+input.burgerMenuToggleObj ~ div.burgerMenuMob {
+    display: none;
+}
+
+input.burgerMenuToggleObj:checked ~ div.burgerMenuMob {
+    display: flex;
+}
+
+@media screen(md) {
+    div.burgerMenuMob {
+        display: none !important;
+    }
+}
+
+div.burgerMenu div > a {
+    @apply select-none;
+    @apply font-bold;
+    color: white;
+    /*noinspection CssUnresolvedCustomProperty*/
+    /*font-family: var(--font-rubik);*/
+    font-family: var(--font-nunito);
+}

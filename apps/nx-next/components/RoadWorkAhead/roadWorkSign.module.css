@@ -1,0 +1,27 @@
+.container {
+    @apply select-none;
+    @apply border-8;
+    @apply border-solid;
+    @apply border-orange-400;
+    @apply rounded-full;
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+    @apply m-auto;
+    @apply mt-5;
+    max-width: 300px;
+    height: 400px;
+}
+
+.lead {
+    @apply font-black;
+    @apply text-5xl;
+    @apply uppercase;
+    @apply leading-none;
+    @apply tracking-wide;
+    @apply text-center;
+    @apply my-10;
+    @apply text-orange-400;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-nunito);
+}

@@ -1,13 +1,16 @@
-import * as process from 'process'
 import React from 'react'
-import styles from './index.module.css'
+import TopBar from '../components/Topbar/topbar'
+import Footer from '../components/Footer/footer'
+import RoadWorkSign from '../components/RoadWorkAhead/roadWorkSign'
 
 export function Index({ title }: { title: string }) {
     return (
         <>
-            <div className={styles.main}>
-                <p className={`text-main`}>Learnbook</p>
+            <TopBar />
+            <div className={`container m-auto p-2`}>
+                <RoadWorkSign />
             </div>
+            <Footer />
         </>
     )
 }
