@@ -1,0 +1,50 @@
+.main {
+    @apply text-neutral-800;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-nunito), var(--font-notoSansTC);
+}
+
+.main > section {
+    @apply my-10;
+}
+
+.gradient {
+    @apply rounded-lg;
+}
+
+.gradient.style1 {
+    @apply bg-gradient-to-r;
+    @apply from-indigo-500;
+    @apply via-purple-500;
+    @apply to-pink-500;
+}
+
+.gradient.style2 {
+    @apply bg-gradient-to-r;
+    @apply from-pink-500;
+    @apply via-red-500;
+    @apply to-yellow-500;
+}
+
+.pageTitle {
+    @apply text-neutral-700;
+    @apply font-bold;
+    @apply text-3xl;
+    @apply mb-5;
+}
+
+.article {
+
+}
+
+.team .card {
+    @apply max-w-sm;
+    @apply rounded-2xl;
+    @apply overflow-hidden;
+    @apply shadow-lg;
+    @apply shadow-neutral-100;
+}
+
+.stack {
+
+}

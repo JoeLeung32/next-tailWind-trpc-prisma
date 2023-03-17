@@ -1,21 +1,18 @@
-//@ts-check
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { withNx } = require('@nrwl/next/plugins/with-nx')
+const withMDX = require('@next/mdx')()
 
-/**
- * @type {import('@nrwl/next/plugins/with-nx').WithNxOptions}
- **/
 const nextConfig = {
     optimizeFonts: false,
     env: {
         site: 'site-var'
     },
     nx: {
-        // Set this to true if you would like to use SVGR
-        // See: https://github.com/gregberge/svgr
         svgr: false
+    },
+    experimental: {
+        appDir: true,
+        mdxRs: true
     }
 }
 
-module.exports = withNx(nextConfig)
+module.exports = withNx(withMDX(nextConfig))

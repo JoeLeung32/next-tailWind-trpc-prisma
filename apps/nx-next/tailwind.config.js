@@ -15,8 +15,18 @@ module.exports = {
         extend: {
             colors: {
                 ...stylePack
+            },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        maxWidth: '100ch'
+                    }
+                }
             }
         }
     },
-    plugins: []
+    plugins: [
+        require('@tailwindcss/line-clamp'),
+        require('@tailwindcss/typography')
+    ]
 }

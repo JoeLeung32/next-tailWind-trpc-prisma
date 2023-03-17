@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 const menu = [
-    { label: 'Home', name: 'home', url: '#home' },
-    { label: 'Blog', name: 'blog', url: '#blog' },
-    { label: 'About', name: 'about', url: '#about' }
+    { label: 'Home', name: 'home', url: '/' },
+    { label: 'Tutorial', name: 'tutorial', url: '/tutorial' },
+    { label: 'About', name: 'about', url: '/about' }
 ]
 
 const TopBar = () => {
@@ -49,9 +49,9 @@ const TopBar = () => {
                 <div>
                     {menu &&
                         menu.map((item, index) => (
-                            <div key={index} className={``}>
-                                <Link href={item.url}>{item.label}</Link>
-                            </div>
+                            <Link key={index} href={item.url}>
+                                {item.label}
+                            </Link>
                         ))}
                 </div>
             </div>

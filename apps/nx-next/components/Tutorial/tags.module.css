@@ -1,0 +1,16 @@
+.tags {
+    @apply text-neutral-500;
+    @apply flex;
+    @apply flex-row;
+    @apply justify-start;
+    @apply items-center;
+    @apply gap-1;
+}
+
+.tags > span {
+    @apply font-light;
+    @apply text-xs;
+    @apply rounded-lg;
+    @apply px-3;
+    @apply py-1;
+}

@@ -1,0 +1,18 @@
+.category {
+    @apply text-orange-600;
+    @apply flex;
+    @apply flex-row;
+    @apply justify-start;
+    @apply items-center;
+    @apply gap-3;
+}
+
+.category > span {
+    @apply bg-orange-50;
+    @apply font-bold;
+    @apply text-xs;
+    @apply rounded-lg;
+    @apply px-3;
+    @apply py-1;
+    @apply uppercase;
+}

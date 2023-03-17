@@ -1,0 +1,78 @@
+.main {
+    @apply text-neutral-800;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-inter), var(--font-notoSansTC);
+}
+
+.pageTitle {
+    @apply text-neutral-700;
+    @apply font-bold;
+    @apply text-3xl;
+    @apply mb-10;
+}
+
+.postList {
+    @apply grid;
+    @apply grid-cols-1;
+    @apply gap-8;
+}
+@media screen(md) {
+    .postList {
+        @apply grid;
+        @apply grid-cols-2;
+        @apply gap-8;
+    }
+}
+
+.postList > .postCard {
+    @apply border-b;
+    @apply border-slate-100;
+    @apply border-solid;
+}
+
+.postList > .postCard:nth-last-child(1) {
+    @apply border-transparent;
+}
+@media screen(md) {
+    .postList > .postCard:nth-last-child(2) {
+        @apply border-transparent;
+    }
+}
+
+.postList > .postCard:hover {
+    @apply cursor-pointer;
+}
+
+.postCard > .title {
+    @apply text-neutral-800;
+    @apply font-bold;
+    @apply text-lg;
+    @apply tracking-tight;
+    @apply mb-3;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-inter);
+}
+
+.postCard:hover > .title {
+    @apply text-neutral-500;
+}
+
+.postCard > .headline {
+    @apply text-neutral-600;
+    @apply text-base;
+    @apply text-ellipsis;
+    @apply line-clamp-2;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-inter);
+}
+
+.article .pageHead {
+    @apply flex;
+    @apply flex-col;
+    /*@apply md:flex-row;*/
+    /*@apply justify-between;*/
+    /*@apply items-start;*/
+    /*@apply md:items-center;*/
+    @apply gap-2;
+    /*@apply mt-2;*/
+}
