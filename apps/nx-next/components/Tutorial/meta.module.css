@@ -1,0 +1,27 @@
+.meta {
+    @apply text-neutral-300;
+    @apply text-[10px];
+    @apply flex;
+    @apply flex-row;
+    @apply justify-start;
+    @apply items-center;
+    @apply gap-3;
+}
+
+.meta > .author {
+    @apply text-neutral-500;
+    @apply text-sm;
+    @apply text-ellipsis;
+    @apply line-clamp-2;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-inter);
+}
+
+.meta > .publish {
+    @apply text-neutral-500;
+    @apply text-sm;
+    @apply text-ellipsis;
+    @apply line-clamp-2;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-inter);
+}

@@ -44,6 +44,7 @@ function WebApp({ Component, pageProps }: AppProps) {
             <>
                 <Head>
                     <title>Learnbook</title>
+                    <meta charSet="utf-8" />
                     <meta name="description" content="" />
                     <meta
                         name="viewport"

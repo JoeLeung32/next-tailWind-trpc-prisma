@@ -1,15 +1,16 @@
 import React from 'react'
+import { remark } from 'remark'
+import html from 'remark-html'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Api from '../../constants/api'
 import styles from './index.module.css'
 import { StrapiDataTutorial } from '../../constants/strapi/Tutorial'
 import { Meta } from '../../constants/strapi/Meta'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAt } from '@fortawesome/free-solid-svg-icons'
-import Date from '../../components/Date/date'
-import { remark } from 'remark'
-import html from 'remark-html'
+import TutorialCategory from '../../components/Tutorial/TutorialCategory'
+import TutorialMeta from '../../components/Tutorial/TutorialMeta'
+import TutorialTags from '../../components/Tutorial/TutorialTags'
 
 type PageProps = {
     data: StrapiDataTutorial[]
@@ -34,7 +35,10 @@ export const getServerSideProps: GetServerSideProps<{
             ].join(',')
         )
         qs.append(`filters[title][$eqi]`, title)
-        qs.append(`populate`, `createdBy`)
+        qs.append(
+            `populate`,
+            ['createdBy', 'tutorial_category', 'tutorial_tags'].join(',')
+        )
         qs.append(`pagination[limit]`, '1')
         const data: PageProps = await Api.get(`tutorials?${qs.toString()}`)
         return {
@@ -93,31 +97,40 @@ const TutorialArticle = ({
     if (res) {
         const { attributes } = res
         return (
-            <main className={wrapperClassName}>
-                <BackButton text={`Back to tutorial`} />
-                <article>
-                    <h1 className={styles.pageTitle}>{attributes.title}</h1>
-                    <div className={`${styles.meta}`}>
-                        {attributes?.updatedBy && (
-                            <div className={styles.author}>
-                                {attributes?.updatedBy?.firstname}{' '}
-                                {attributes?.updatedBy?.lastname}
+            <>
+                <Head>
+                    <title>{attributes.title}</title>
+                    <meta name={`description`} content={attributes.headline} />
+                </Head>
+                <main className={wrapperClassName}>
+                    <BackButton text={`Back to tutorial`} />
+                    <article className={styles.article}>
+                        <div className={styles.pageTitle}>
+                            <h1>{attributes.title}</h1>
+                            <div className={styles.meta}>
+                                <TutorialCategory
+                                    category={
+                                        attributes.tutorial_category?.data
+                                    }
+                                />
+                                <TutorialMeta
+                                    author={attributes?.updatedBy}
+                                    date={attributes.publishedAt}
+                                />
                             </div>
-                        )}
-                        <FontAwesomeIcon icon={faAt} />
-                        {attributes.publishedAt && (
-                            <div className={styles.publish}>
-                                {Date(attributes.publishedAt, 'LLL d, yyyy')}
+                            <div className={`mt-2`}>
+                                <TutorialTags
+                                    tags={attributes.tutorial_tags?.data}
+                                />
                             </div>
+                        </div>
+                        {attributes.content && (
+                            <MDXContent content={attributes.content} />
                         )}
-                    </div>
-                    <hr className={`text-neutral-600 mt-3 mb-6`} />
-                    {attributes.content && (
-                        <MDXContent content={attributes.content} />
-                    )}
-                </article>
-                <BackButton text={`Back to tutorial`} />
-            </main>
+                    </article>
+                    <BackButton text={`Back to tutorial`} />
+                </main>
+            </>
         )
     }
     return (
