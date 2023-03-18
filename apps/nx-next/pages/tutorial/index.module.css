@@ -77,17 +77,3 @@
     @apply gap-4;
     @apply mt-2;
 }
-
-.article .mdxContent {
-    @apply prose;
-    @apply lg:prose-xl;
-    /*noinspection CssUnresolvedCustomProperty*/
-    font-family: var(--font-inter);
-}
-
-.article .mdxContent img {
-    @apply rounded-2xl;
-    @apply p-1;
-    @apply shadow-neutral-500;
-    @apply shadow-xl;
-}

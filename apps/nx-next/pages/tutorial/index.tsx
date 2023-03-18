@@ -39,7 +39,7 @@ export const getServerSideProps: GetServerSideProps<{
 }
 
 const TutorialCard = ({
-    data: { id, attributes },
+    data: { attributes },
     index
 }: {
     data: StrapiDataTutorial

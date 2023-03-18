@@ -1,0 +1,13 @@
+.mdxContent {
+    @apply prose;
+    @apply lg:prose-xl;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-inter);
+}
+
+.mdxContent img {
+    @apply rounded-2xl;
+    @apply p-1;
+    @apply shadow-neutral-500;
+    @apply shadow-xl;
+}

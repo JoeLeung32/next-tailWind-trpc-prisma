@@ -1,16 +1,15 @@
 import React from 'react'
-import { remark } from 'remark'
-import html from 'remark-html'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import Api from '../../constants/api'
 import styles from './index.module.css'
 import { StrapiDataTutorial } from '../../constants/strapi/Tutorial'
 import { Meta } from '../../constants/strapi/Meta'
+import BackButton from '../../components/BackButton/BackButton'
 import TutorialCategory from '../../components/Tutorial/TutorialCategory'
 import TutorialMeta from '../../components/Tutorial/TutorialMeta'
 import TutorialTags from '../../components/Tutorial/TutorialTags'
+import MDXContent from '../../components/MDX/MDXContent'
 
 type PageProps = {
     data: StrapiDataTutorial[]
@@ -52,48 +51,10 @@ export const getServerSideProps: GetServerSideProps<{
     }
 }
 
-const BackButton = ({ text }: { text?: string }) => {
-    const router = useRouter()
-    return (
-        <div className={`my-5`}>
-            <button
-                type={`button`}
-                onClick={() => router.back()}
-                className={`underline`}
-            >
-                {text || `Back to previous page`}
-            </button>
-        </div>
-    )
-}
-
-const MDXContent = ({ content }: { content: string }) => {
-    const [mdx, setMdx] = React.useState<string | null>(null)
-    const fetchData = async () => {
-        const { value } = await remark().use(html).process(content)
-        setMdx(value.toString())
-    }
-    React.useEffect(() => {
-        fetchData().catch(console.error)
-    }, [content])
-    if (mdx) {
-        return (
-            <>
-                <div
-                    className={styles.mdxContent}
-                    dangerouslySetInnerHTML={{ __html: mdx }}
-                />
-            </>
-        )
-    }
-    return <>No Content</>
-}
-
 const TutorialArticle = ({
     data
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const res = data?.data[0] || null
-    const wrapperClassName = `${styles.main} container mx-auto px-4 py-2 mt-5 mb-2 mb-20`
     if (res) {
         const { attributes } = res
         return (
@@ -102,7 +63,9 @@ const TutorialArticle = ({
                     <title>{attributes.title}</title>
                     <meta name={`description`} content={attributes.headline} />
                 </Head>
-                <main className={wrapperClassName}>
+                <main
+                    className={`${styles.main} container mx-auto px-4 py-2 mt-5 mb-2 mb-20`}
+                >
                     <BackButton text={`Back to tutorial`} />
                     <article className={styles.article}>
                         <div className={styles.pageTitle}>
@@ -134,10 +97,11 @@ const TutorialArticle = ({
         )
     }
     return (
-        <main className={wrapperClassName}>
+        <main className={`container mx-auto px-4 py-2 my-20`}>
             <article>
-                <h1 className={styles.pageTitle}>Article Not Found</h1>
-                <hr className={`text-neutral-600 my-10`} />
+                <h1 className={`text-neutral-700 font-bold text-3xl mb-5`}>
+                    Article Not Found
+                </h1>
                 <p className={`text-gray-500`}>
                     Please contact your administrator to get more details.
                 </p>

@@ -1,55 +1,71 @@
 import React from 'react'
 import styles from './index.module.css'
-import Date from '../../components/Date/date'
 import Api from '../../constants/api'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAt } from '@fortawesome/free-solid-svg-icons'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { DataSubsetBaseWithAuthor } from '../../constants/strapi/Meta'
+import BackButton from '../../components/BackButton/BackButton'
+import MDXContent from '../../components/MDX/MDXContent'
 
-export async function getServerSideProps() {
-    const data = await Api.get(
-        `tutorials?fields=${[
-            'title',
-            'headline',
-            'updatedAt',
-            'publishedAt',
-            'scheduleToPublishAt'
-        ].join(',')}&populate=createdBy&sort[0]=updatedAt:DESC`
-    )
+interface ContentProps extends DataSubsetBaseWithAuthor {
+    title: string
+    content: string
+}
+
+type PageProps = {
+    data: {
+        id: number
+        attributes: ContentProps
+    }
+    meta: object
+} | null
+
+export const getServerSideProps: GetServerSideProps<{
+    data: PageProps
+}> = async (context) => {
+    const data: PageProps = await Api.get(`about-me`)
+    if (data) {
+        return {
+            props: { data }
+        }
+    }
     return {
         props: {
-            data
+            data: null
         }
     }
 }
 
-const BlogIndex = ({ data }: any) => {
-    const { data: posts } = data
-    return (
-        <main className={`${styles.main} container mx-auto px-4 py-2 mt-5`}>
-            <h1 className={styles.pageTitle}>Tutorial</h1>
-            <hr className={`text-neutral-600 my-10`} />
-            <div className={`${styles.postList}`}>
-                {posts.map(({ id, attributes }: any, index: number) => (
-                    <div key={index} className={styles.post}>
-                        <div className={styles.title}>{attributes.title}</div>
-                        <div className={styles.headline}>
-                            {attributes.headline}
-                        </div>
-                        <div className={styles.meta}>
-                            <div className={styles.author}>
-                                {attributes.updatedBy.firstname}{' '}
-                                {attributes.updatedBy.lastname}
-                            </div>
-                            <FontAwesomeIcon icon={faAt} />
-                            <div className={styles.publish}>
-                                {Date(attributes.publishedAt, 'LLL d, yyyy')}
-                            </div>
-                        </div>
+const AboutMeIndex = ({
+    data
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    if (data) {
+        const { attributes } = data.data
+        return (
+            <main className={`${styles.main} container mx-auto px-4 py-2 my-5`}>
+                <article className={styles.article}>
+                    <div className={styles.pageTitle}>
+                        <h1>{attributes.title}</h1>
                     </div>
-                ))}
-            </div>
+                    {attributes.content && (
+                        <MDXContent content={attributes.content} />
+                    )}
+                </article>
+            </main>
+        )
+    }
+    return (
+        <main className={`container mx-auto px-4 py-2 my-20`}>
+            <article>
+                <h1 className={`text-neutral-700 font-bold text-3xl mb-5`}>
+                    Page Not Found
+                </h1>
+                <p className={`text-gray-500`}>
+                    Please contact your administrator to get more details.
+                </p>
+            </article>
+            <BackButton />
         </main>
     )
 }
 
-export default BlogIndex
+export default AboutMeIndex
