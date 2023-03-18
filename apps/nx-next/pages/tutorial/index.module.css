@@ -65,19 +65,17 @@
     font-family: var(--font-inter);
 }
 
-.post > .meta {
+.meta {
     @apply text-neutral-300;
     @apply text-[10px];
-    @apply mt-3;
     @apply flex;
     @apply flex-row;
     @apply justify-start;
     @apply items-center;
     @apply gap-3;
-    @apply mb-6;
 }
 
-.post > .meta > .author {
+.meta > .author {
     @apply text-neutral-500;
     @apply text-sm;
     @apply text-ellipsis;
@@ -86,11 +84,25 @@
     font-family: var(--font-inter);
 }
 
-.post > .meta > .publish {
+.meta > .publish {
     @apply text-neutral-500;
     @apply text-sm;
     @apply text-ellipsis;
     @apply line-clamp-2;
     /*noinspection CssUnresolvedCustomProperty*/
     font-family: var(--font-inter);
+}
+
+.mdxContent {
+    @apply prose;
+    @apply lg:prose-xl;
+    /*noinspection CssUnresolvedCustomProperty*/
+    font-family: var(--font-inter);
+}
+
+.mdxContent img {
+    @apply rounded-2xl;
+    @apply p-1;
+    @apply shadow-neutral-500;
+    @apply shadow-xl;
 }
