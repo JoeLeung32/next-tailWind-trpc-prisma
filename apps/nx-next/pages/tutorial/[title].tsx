@@ -16,7 +16,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     return {
         paths: [
             {
-                params: { title: `Day%2001%20-%20Strapi%20run%20on%20Railway` }
+                params: { title: `Day 01 - Strapi run on Railway` }
             }
         ],
         fallback: 'blocking'
