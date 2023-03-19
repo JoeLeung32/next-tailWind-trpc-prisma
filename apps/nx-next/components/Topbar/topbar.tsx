@@ -49,7 +49,7 @@ const TopBar = () => {
                 <div>
                     {menu &&
                         menu.map((item, index) => (
-                            <Link href={item.url} key={index}>
+                            <Link key={index} href={item.url}>
                                 {item.label}
                             </Link>
                         ))}

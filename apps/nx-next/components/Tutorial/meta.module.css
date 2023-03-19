@@ -1,4 +1,5 @@
 .meta {
+    @apply font-normal;
     @apply text-neutral-300;
     @apply text-[10px];
     @apply flex;

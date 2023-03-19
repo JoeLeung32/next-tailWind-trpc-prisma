@@ -7,7 +7,7 @@ import { faTags } from '@fortawesome/free-solid-svg-icons'
 const TutorialTags = ({ tags }: { tags: StrapiDataTutorialTag[] }) => {
     return (
         <div className={styles.tags}>
-            <FontAwesomeIcon icon={faTags} className={`text-sm pr-3`} />
+            <FontAwesomeIcon icon={faTags} className={`text-sm px-3`} />
             {tags.map(({ id, attributes }, index) => (
                 <span key={index}>{attributes.name}</span>
             ))}

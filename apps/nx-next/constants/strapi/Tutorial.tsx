@@ -1,4 +1,5 @@
 import { DataSubsetBase, DataSubsetBaseWithAuthor } from './Meta'
+import { StrapiResponseProps } from './Response'
 
 interface AttributesTutorialCategory extends DataSubsetBase {
     name: string
@@ -20,7 +21,7 @@ export interface StrapiDataTutorialTag extends DataSubsetBase {
     attributes: AttributesTutorialTag
 }
 
-interface AttributesTutorial extends DataSubsetBaseWithAuthor {
+export interface StrapiTutorialProps extends DataSubsetBaseWithAuthor {
     title: string
     headline: string
     content?: string
@@ -29,11 +30,15 @@ interface AttributesTutorial extends DataSubsetBaseWithAuthor {
         data: StrapiDataTutorialCategory
     }
     tutorial_tags: {
-        data: StrapiDataTutorialTag[]
+        data: [StrapiDataTutorialTag]
     }
 }
 
-export interface StrapiDataTutorial {
-    id: number
-    attributes: AttributesTutorial
+export interface StrapiTutorialsResProps extends StrapiResponseProps {
+    data: [
+        {
+            id: number
+            attributes: StrapiTutorialProps
+        }
+    ]
 }

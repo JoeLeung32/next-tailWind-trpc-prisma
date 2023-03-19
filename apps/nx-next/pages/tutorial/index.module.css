@@ -66,14 +66,13 @@
     font-family: var(--font-inter);
 }
 
-.article .meta {
-    @apply font-normal;
+.article .pageHead {
     @apply flex;
     @apply flex-col;
-    @apply md:flex-row;
-    @apply justify-between;
-    @apply items-start;
-    @apply md:items-center;
-    @apply gap-4;
-    @apply mt-2;
+    /*@apply md:flex-row;*/
+    /*@apply justify-between;*/
+    /*@apply items-start;*/
+    /*@apply md:items-center;*/
+    @apply gap-2;
+    /*@apply mt-2;*/
 }

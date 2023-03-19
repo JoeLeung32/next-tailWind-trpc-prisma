@@ -11,13 +11,11 @@ export interface DataSubsetBaseWithAuthor extends DataSubsetBase {
     updatedBy?: Author
 }
 
-export interface Meta {
-    meta: {
-        pagination?: {
-            page: number
-            pageSize: number
-            pageCount: number
-            total: number
-        }
+export interface StrapiMeta {
+    pagination?: {
+        page: number
+        pageSize: number
+        pageCount: number
+        total: number
     }
 }
