@@ -1,8 +1,11 @@
-div.topbar {
+div.top {
     @apply bg-main;
 }
 
-div.topbar > div.wrapper {
+/* Wrapper */
+
+div.wrapper {
+    @apply container;
     @apply m-auto;
     @apply flex;
     @apply flex-row;
@@ -11,10 +14,9 @@ div.topbar > div.wrapper {
     @apply items-center;
     @apply p-2;
     @apply px-4;
-    @apply overflow-hidden;
 }
 
-div.logo {
+div.wrapper div.logo {
     @apply select-none;
     @apply font-black;
     @apply text-xl;
@@ -27,23 +29,49 @@ div.logo {
 }
 
 @media screen(md) {
-    div.logo {
+    div.wrapper div.logo {
         @apply font-extrabold;
         @apply text-3xl;
     }
 }
 
-input.burgerMenuToggleObj,
-input.burgerMenuToggleObj ~ div.burgerMenuMob {
+/* Menu */
+
+div.menus {
+    @apply flex;
+    @apply flex-row;
+    @apply relative;
+}
+
+div.menus input[type="checkbox"] {
     @apply hidden;
 }
 
-input.burgerMenuToggleObj:checked ~ div.burgerMenuMob {
-    @apply flex;
+div.menus div.menuItem {
+    @apply relative;
 }
 
-div.burgerMenu div > a {
+div.menu {
+    @apply bg-main;
+    @apply hidden;
+    @apply px-8;
+    @apply py-2;
+    @apply whitespace-nowrap;
+    @apply flex-col;
+    @apply absolute;
+    @apply right-0;
+}
+
+div.menus,
+div.menu {
+    @apply gap-2;
+    @apply justify-end;
+    @apply items-center;
+}
+
+div.menu a {
     @apply select-none;
+    @apply cursor-pointer;
     @apply font-bold;
     @apply tracking-wide;
     @apply text-white;
@@ -51,48 +79,63 @@ div.burgerMenu div > a {
     font-family: var(--font-nunito);
 }
 
-div.burgerMenuFull {
-    @apply hidden;
-    @apply md:flex;
-    @apply flex-row;
-    @apply justify-end;
-    @apply items-center;
-    @apply gap-5;
-}
-
-div.burgerMenuCom svg {
-    @apply text-white;
-}
-
-div.burgerMenuMob {
-    @apply m-auto;
-    @apply relative;
-}
-
-div.burgerMenuMob > div {
-    @apply bg-main;
+div.menus input[type="checkbox"]:checked ~ div {
     @apply flex;
-    @apply flex-col;
-    @apply justify-end;
-    @apply items-center;
-    @apply gap-2;
-    @apply w-auto;
-    @apply max-w-full;
-    @apply absolute;
-    @apply top-0;
-    @apply right-0;
-}
-
-div.burgerMenuMob > div > a {
-    @apply w-full;
-    @apply text-center;
-    @apply p-2;
-    @apply px-8;
-    @apply hover:bg-premium;
 }
 
 @media screen(md) {
-    div.burgerMenuMob {
-        @apply hidden !important;
+    div.menu {
+        @apply p-0;
+        @apply flex;
+        @apply flex-row;
+        @apply relative;
     }
 }
+
+/* Menu Icon */
+
+div.menuIcon {
+    @apply cursor-pointer;
+    @apply text-white;
+    @apply flex;
+}
+
+div.menuIcon > label {
+    @apply px-2;
+}
+
+@media screen(md) {
+    div.menuIcon {
+        @apply hidden;
+    }
+}
+
+/* Language */
+
+div.menu[data-is="language"] a > span {
+    @apply hidden;
+}
+
+div.menu[data-is="language"] a > span[data-for="mobile"] {
+    @apply block;
+}
+
+@media screen(md) {
+    div.menu[data-is="language"] {
+        @apply mr-5;
+        @apply lg:mr-10;
+    }
+
+    div.menu[data-is="language"] a > span {
+        @apply block;
+        @apply font-normal;
+        @apply text-xs;
+    }
+
+    div.menu[data-is="language"] a > span[data-for="mobile"] {
+        @apply hidden;
+    }
+}
+
+
+

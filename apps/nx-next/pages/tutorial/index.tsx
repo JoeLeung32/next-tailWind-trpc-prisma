@@ -1,6 +1,8 @@
 import React from 'react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import i18nConfig from '../../next-i18next.config'
 import styles from './index.module.css'
 import Api from '../../constants/api'
 import {
@@ -10,10 +12,15 @@ import {
 import Error404 from '../../components/Errors/404'
 import TutorialCategory from '../../components/Tutorial/TutorialCategory'
 import TutorialMeta from '../../components/Tutorial/TutorialMeta'
+import { useTranslation } from 'react-i18next'
+import LoadingSpinner from '../../components/LoadingSpinner'
+import { localeMapping } from '../../constants/LocaleMapping'
 
 export const getStaticProps: GetStaticProps<{
     res: StrapiTutorialsResProps
-}> = async () => {
+}> = async (context) => {
+    const locale: string = context.locale || 'en'
+    const localeForStrapi = localeMapping[locale]
     const qs = new URLSearchParams()
     qs.append(
         `fields`,
@@ -30,26 +37,28 @@ export const getStaticProps: GetStaticProps<{
         ['createdBy', 'tutorial_category', 'tutorial_tags'].join(',')
     )
     qs.append(`sort`, 'updatedAt:DESC')
+    qs.append(`locale`, localeForStrapi)
     const res: StrapiTutorialsResProps = await Api.get(
         `tutorials?${qs.toString()}`
     )
     return {
         props: {
+            ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
             res
         }
     }
 }
 
 const TutorialCard = ({
-    key,
+    id,
     attributes
 }: {
-    key: number
+    id: number
     attributes: StrapiTutorialProps
 }) => {
     return (
         <Link
-            key={key}
+            key={id}
             href={`/tutorial/${attributes.title}`}
             className={styles.postCard}
         >
@@ -74,19 +83,24 @@ const TutorialIndex = (
     props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
     const { data, meta, error } = props.res
+    const { t } = useTranslation()
+    const [init, setInit] = React.useState(false)
+    React.useEffect(() => {
+        setInit(true)
+    }, [])
+    if (!init) return <LoadingSpinner />
     if (data) {
         return (
-            <main
-                className={`${styles.main} container mx-auto px-4 py-2 mt-5  mb-6`}
-            >
+            <main className={`${styles.main} mb-6`}>
                 <div className={styles.pageTitle}>
-                    <h1>Tutorial</h1>
+                    <h1>{t('Tutorial')}</h1>
                 </div>
                 <div className={`${styles.postList}`}>
                     {data &&
                         data.map((tutorial, index) => (
                             <TutorialCard
                                 key={index}
+                                id={tutorial.id}
                                 attributes={tutorial.attributes}
                             />
                         ))}

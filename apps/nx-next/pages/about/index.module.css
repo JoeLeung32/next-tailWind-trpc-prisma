@@ -1,5 +1,9 @@
 .main {
+    @apply container;
     @apply text-neutral-800;
+    @apply mx-auto;
+    @apply px-4;
+    @apply py-2;
     /*noinspection CssUnresolvedCustomProperty*/
     font-family: var(--font-nunito), var(--font-notoSansTC);
 }

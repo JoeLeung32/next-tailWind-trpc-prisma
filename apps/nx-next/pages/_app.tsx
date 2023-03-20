@@ -5,15 +5,16 @@ import { inter, notoSansTC, nunito, rubik } from '../constants/fonts'
 // -- Fontawesome
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons'
 // -- React/Next
 import React from 'react'
+import { appWithTranslation } from 'next-i18next'
+import i18nConfig from '../next-i18next.config'
 import Router from 'next/router'
 import Head from 'next/head'
 import { AppProps } from 'next/app'
 import { trpc } from '../utils/trpc'
 import { SiteProvider } from '../contexts/site'
+import LoadingSpinner from '../components/LoadingSpinner'
 import TopBar from '../components/Topbar/topbar'
 import Footer from '../components/Footer/footer'
 
@@ -55,14 +56,7 @@ function WebApp({ Component, pageProps }: AppProps) {
                     <TopBar />
                     <>
                         {loading ? (
-                            <div
-                                className={`flex flex-row justify-center items-center p-12`}
-                            >
-                                <FontAwesomeIcon
-                                    icon={faCircleNotch}
-                                    className={`fa-spin text-5xl text-main`}
-                                />
-                            </div>
+                            <LoadingSpinner />
                         ) : (
                             <>
                                 <Component {...pageProps} />
@@ -76,4 +70,4 @@ function WebApp({ Component, pageProps }: AppProps) {
     )
 }
 
-export default trpc.withTRPC(WebApp)
+export default trpc.withTRPC(appWithTranslation(WebApp, i18nConfig))

@@ -6,6 +6,12 @@ import { DataSubsetBaseWithAuthor } from '../../constants/strapi/Meta'
 import { StrapiResponseProps } from '../../constants/strapi/Response'
 import MDXContent from '../../components/MDX/MDXContent'
 import Error404 from '../../components/Errors/404'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import i18nConfig from '../../next-i18next.config'
+import { useTranslation } from 'react-i18next'
+import LoadingSpinner from '../../components/LoadingSpinner'
+import BackButton from '../../components/BackButton/BackButton'
+import { localeMapping } from '../../constants/LocaleMapping'
 
 interface ContentProps extends DataSubsetBaseWithAuthor {
     title: string
@@ -22,10 +28,13 @@ interface PageProps extends StrapiResponseProps {
 export const getStaticProps: GetStaticProps<{
     res: PageProps
 }> = async (context) => {
-    const res: PageProps = await Api.get(`about-joe`)
+    const locale = context.locale || 'en'
+    const localeForStrapi = localeMapping[locale]
+    const res: PageProps = await Api.get(`about-joe?locale=${localeForStrapi}`)
     return {
         props: {
-            res
+            res,
+            ...(await serverSideTranslations(locale, ['common'], i18nConfig))
         }
     }
 }
@@ -34,10 +43,17 @@ const AboutJoeIndex = (
     props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
     const { data, meta, error } = props.res
+    const { t } = useTranslation()
+    const [init, setInit] = React.useState(false)
+    React.useEffect(() => {
+        setInit(true)
+    }, [])
+    if (!init) return <LoadingSpinner />
     if (data) {
         const { attributes } = data
         return (
-            <main className={`${styles.main} container mx-auto px-4 py-2 my-5`}>
+            <main className={`${styles.main} my-5`}>
+                <BackButton />
                 <article className={styles.article}>
                     <div className={styles.pageTitle}>
                         <h1>{attributes.title}</h1>
@@ -46,6 +62,7 @@ const AboutJoeIndex = (
                         <MDXContent content={attributes.content} />
                     )}
                 </article>
+                <BackButton />
             </main>
         )
     }
