@@ -11,6 +11,7 @@ import TutorialMeta from '../../components/Tutorial/TutorialMeta'
 import TutorialTags from '../../components/Tutorial/TutorialTags'
 import MDXContent from '../../components/MDX/MDXContent'
 import Error404 from '../../components/Errors/404'
+import { useTranslation } from 'react-i18next'
 
 export const getStaticPaths: GetStaticPaths = async () => {
     return {
@@ -68,6 +69,7 @@ const TutorialArticle = (
 ) => {
     const { data, meta, error } = props.res
     const total = meta?.pagination?.total
+    const { t } = useTranslation()
     if (data && total) {
         const { id, attributes } = data[0]
         return (
@@ -76,10 +78,8 @@ const TutorialArticle = (
                     <title>{attributes.title}</title>
                     <meta name={`description`} content={attributes.headline} />
                 </Head>
-                <main
-                    className={`${styles.main} container mx-auto px-4 py-2 mt-5 mb-20`}
-                >
-                    <BackButton text={`Back to tutorial`} />
+                <main className={`${styles.main} mb-20`}>
+                    <BackButton text={t('Back to tutorial').toString()} />
                     <article className={styles.article}>
                         <div
                             className={`${styles.pageTitle} ${styles.pageHead}`}
@@ -100,7 +100,7 @@ const TutorialArticle = (
                             <MDXContent content={attributes.content} />
                         )}
                     </article>
-                    <BackButton text={`Back to tutorial`} />
+                    <BackButton text={t('Back to tutorial').toString()} />
                 </main>
             </>
         )

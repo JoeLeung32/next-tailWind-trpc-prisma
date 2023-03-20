@@ -1,5 +1,10 @@
 .main {
+    @apply container;
     @apply text-neutral-800;
+    @apply mx-auto;
+    @apply px-4;
+    @apply py-2;
+    @apply mt-5;
     /*noinspection CssUnresolvedCustomProperty*/
     font-family: var(--font-inter), var(--font-notoSansTC);
 }

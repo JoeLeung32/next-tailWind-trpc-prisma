@@ -3,10 +3,14 @@ import styles from './index.module.css'
 import Api from '../../constants/api'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import i18nConfig from '../../next-i18next.config'
 import { DataSubsetBaseWithAuthor } from '../../constants/strapi/Meta'
 import { StrapiResponseProps } from '../../constants/strapi/Response'
 import Error404 from '../../components/Errors/404'
 import MDXContent from '../../components/MDX/MDXContent'
+import { useTranslation } from 'react-i18next'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 interface ContentProps extends DataSubsetBaseWithAuthor {
     title: string
@@ -40,18 +44,16 @@ export const getStaticProps: GetStaticProps<{
     res: PageProps
     team: TeamMemberProps
 }> = async (context) => {
+    const locale = context.locale || 'en'
     const res: PageProps = await Api.get(`about-learnbook`)
     const team: TeamMemberProps = await Api.get(`team-members`)
     return {
         props: {
             res,
-            team
+            team,
+            ...(await serverSideTranslations(locale, ['common'], i18nConfig))
         }
     }
-}
-
-interface TeamCardProps {
-    name: string
 }
 
 const Content = ({ data }: { data: PageProps }) => {
@@ -102,14 +104,21 @@ const TeamCard = ({
 const AboutMeIndex = (
     props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
+    const { t } = useTranslation()
+    const [init, setInit] = React.useState(false)
+    React.useEffect(() => {
+        setInit(true)
+    }, [])
+    if (!init) return <LoadingSpinner />
     return (
-        <main
-            className={`${styles.main} container mx-auto px-4 py-2 mt-5 mb-12`}
-        >
+        <main className={`${styles.main} mt-5 mb-12`}>
+            <div className={styles.pageTitle}>
+                <h1>{t('About')}</h1>
+            </div>
             <Content data={props.res} />
             <div className={`${styles.gradient} ${styles.style1} my-5 py-5`} />
             <section className={styles.team}>
-                <div className={styles.pageTitle}>Team</div>
+                <div className={styles.pageTitle}>{t('Team')}</div>
                 <div
                     className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4`}
                 >
@@ -121,7 +130,7 @@ const AboutMeIndex = (
             </section>
             <div className={`${styles.gradient} ${styles.style2} my-5 py-5`} />
             <section className={styles.stack}>
-                <div className={styles.pageTitle}>Stack</div>
+                <div className={styles.pageTitle}>{t('Stack')}</div>
                 <div className={`p-2 px-4 prose lg:prose-xl`}>
                     <strong>Learnbook is using:</strong>
                     <ol>

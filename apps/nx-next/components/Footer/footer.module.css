@@ -1,4 +1,5 @@
-div.container {
+div.wrapper {
+    @apply container;
     @apply m-auto;
     @apply mt-5;
     @apply p-2;
