@@ -1,40 +1,39 @@
 import React from 'react'
 import styles from './index.module.css'
-import Api from '../../constants/api'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { DataSubsetBaseWithAuthor } from '../../constants/strapi/Meta'
-import { StrapiResponseProps } from '../../constants/strapi/Response'
-import MDXContent from '../../components/MDX/MDXContent'
-import Error404 from '../../components/Errors/404'
+import { useTranslation } from 'react-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import i18nConfig from '../../next-i18next.config'
-import { useTranslation } from 'react-i18next'
+import strapi from '../../utils/strapi'
+import {
+    AttributeBaseWithAuthor,
+    StrapiResProps
+} from '../../utils/strapi/helpers/response'
+import MDXContent from '../../components/MDX/MDXContent'
+import Error404 from '../../components/Errors/404'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import BackButton from '../../components/BackButton/BackButton'
-import { localeMapping } from '../../constants/LocaleMapping'
 
-interface ContentProps extends DataSubsetBaseWithAuthor {
+interface ContentProps extends AttributeBaseWithAuthor {
     title: string
     content: string
 }
 
-interface PageProps extends StrapiResponseProps {
+interface PageProps extends StrapiResProps {
     data: {
         id: number
         attributes: ContentProps
-    }
+    } | null
 }
 
 export const getStaticProps: GetStaticProps<{
     res: PageProps
 }> = async (context) => {
     const locale = context.locale || 'en'
-    const localeForStrapi = localeMapping[locale]
-    const res: PageProps = await Api.get(`about-joe?locale=${localeForStrapi}`)
     return {
         props: {
-            res,
-            ...(await serverSideTranslations(locale, ['common'], i18nConfig))
+            ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
+            res: await strapi.aboutJoe.req({ locale })
         }
     }
 }

@@ -1,44 +1,47 @@
 import React from 'react'
 import styles from './index.module.css'
-import Api from '../../constants/api'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import i18nConfig from '../../next-i18next.config'
-import { DataSubsetBaseWithAuthor } from '../../constants/strapi/Meta'
-import { StrapiResponseProps } from '../../constants/strapi/Response'
+import strapi from '../../utils/strapi'
+import {
+    AttributeBaseWithAuthor,
+    StrapiResProps
+} from '../../utils/strapi/helpers/response'
 import Error404 from '../../components/Errors/404'
 import MDXContent from '../../components/MDX/MDXContent'
-import { useTranslation } from 'react-i18next'
 import LoadingSpinner from '../../components/LoadingSpinner'
-import { localeMapping } from '../../constants/LocaleMapping'
 
-interface ContentProps extends DataSubsetBaseWithAuthor {
+interface ContentProps extends AttributeBaseWithAuthor {
     title: string
     content: string
 }
 
-interface TeamProps extends DataSubsetBaseWithAuthor {
+interface TeamProps extends AttributeBaseWithAuthor {
     name: string
     profile: string
     tags: string
     link: string
 }
 
-interface PageProps extends StrapiResponseProps {
+interface PageProps extends StrapiResProps {
     data: {
         id?: number
         attributes: ContentProps
-    }
+    } | null
 }
 
-interface TeamMemberProps extends StrapiResponseProps {
-    data: [
-        {
-            id?: number
-            attributes: TeamProps
-        }
-    ]
+interface TeamMemberProps extends StrapiResProps {
+    data:
+        | [
+              {
+                  id?: number
+                  attributes: TeamProps
+              }
+          ]
+        | null
 }
 
 export const getStaticProps: GetStaticProps<{
@@ -46,16 +49,11 @@ export const getStaticProps: GetStaticProps<{
     team: TeamMemberProps
 }> = async (context) => {
     const locale = context.locale || 'en'
-    const localeForStrapi = localeMapping[locale]
-    const res: PageProps = await Api.get(
-        `about-learnbook?locale=${localeForStrapi}`
-    )
-    const team: TeamMemberProps = await Api.get(`team-members`)
     return {
         props: {
             ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
-            res,
-            team
+            res: await strapi.aboutLearnbook.req({ locale }),
+            team: await strapi.teamMembers.req()
         }
     }
 }
@@ -127,6 +125,7 @@ const AboutMeIndex = (
                     className={`grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4`}
                 >
                     {props.team &&
+                        props.team.data &&
                         props.team.data.map((data, index) => (
                             <TeamCard key={index} data={data} />
                         ))}

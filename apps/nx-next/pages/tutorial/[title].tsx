@@ -2,19 +2,18 @@ import React from 'react'
 import { ParsedUrlQuery } from 'querystring'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
+import { useTranslation } from 'react-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import i18nConfig from '../../next-i18next.config'
-import Api from '../../constants/api'
+import strapi from '../../utils/strapi'
+import { TutorialsRes } from '../../utils/strapi/dataType/Tutorial'
 import styles from './index.module.css'
-import { StrapiTutorialsResProps } from '../../constants/strapi/Tutorial'
 import BackButton from '../../components/BackButton/BackButton'
 import TutorialCategory from '../../components/Tutorial/TutorialCategory'
 import TutorialMeta from '../../components/Tutorial/TutorialMeta'
 import TutorialTags from '../../components/Tutorial/TutorialTags'
 import MDXContent from '../../components/MDX/MDXContent'
 import Error404 from '../../components/Errors/404'
-import { useTranslation } from 'react-i18next'
-import { localeMapping } from '../../constants/LocaleMapping'
 import LoadingSpinner from '../../components/LoadingSpinner'
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -22,6 +21,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
         paths: [
             {
                 params: { title: `Day 01 - Strapi run on Railway` }
+            },
+            {
+                params: { title: `第一步：Strapi 在 Railway 上執行` }
             }
         ],
         fallback: 'blocking'
@@ -29,7 +31,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 interface Output {
-    res: StrapiTutorialsResProps
+    res: TutorialsRes
 }
 
 interface Input extends ParsedUrlQuery {
@@ -40,34 +42,11 @@ export const getStaticProps: GetStaticProps<Output, Input> = async (
     context
 ) => {
     const locale: string = context.locale || 'en'
-    const localeForStrapi = localeMapping[locale]
     const title = context.params?.title || ''
-    const qs = new URLSearchParams()
-    qs.append(
-        `fields`,
-        [
-            'title',
-            'headline',
-            'content',
-            'updatedAt',
-            'publishedAt',
-            'scheduleToPublishAt'
-        ].join(',')
-    )
-    qs.append(`filters[title][$eqi]`, title)
-    qs.append(
-        `populate`,
-        ['createdBy', 'tutorial_category', 'tutorial_tags'].join(',')
-    )
-    qs.append(`pagination[limit]`, '1')
-    qs.append(`locale`, localeForStrapi)
-    const res: StrapiTutorialsResProps = await Api.get(
-        `tutorials?${qs.toString()}`
-    )
     return {
         props: {
             ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
-            res
+            res: await strapi.tutorial.req({ locale, title })
         }
     }
 }
@@ -83,7 +62,7 @@ const TutorialArticle = (
         setInit(true)
     }, [])
     if (!init) return <LoadingSpinner />
-    if (data && total) {
+    if (data && data.length && total) {
         const { id, attributes } = data[0]
         return (
             <>
@@ -98,7 +77,7 @@ const TutorialArticle = (
                             className={`${styles.pageTitle} ${styles.pageHead}`}
                         >
                             <TutorialCategory
-                                category={attributes.tutorial_category?.data}
+                                category={attributes.tutorial_category.data}
                             />
                             <h1>{attributes.title}</h1>
                             <TutorialMeta
@@ -106,7 +85,7 @@ const TutorialArticle = (
                                 date={attributes.publishedAt}
                             />
                             <TutorialTags
-                                tags={attributes.tutorial_tags?.data}
+                                tags={attributes.tutorial_tags.data}
                             />
                         </div>
                         {attributes.content && (
