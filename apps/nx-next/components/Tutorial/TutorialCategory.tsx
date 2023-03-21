@@ -1,12 +1,8 @@
 import React from 'react'
 import styles from './category.module.css'
-import { StrapiDataTutorialCategory } from '../../constants/strapi/Tutorial'
+import { TutorialCategory } from '../../utils/strapi/dataType/TutorialCategory'
 
-const TutorialCategory = ({
-    category
-}: {
-    category: StrapiDataTutorialCategory
-}) => {
+const TutorialCategory = ({ category }: { category: TutorialCategory }) => {
     if (!category) return null
     const { id, attributes } = category
     return (

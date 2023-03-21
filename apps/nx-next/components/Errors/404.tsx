@@ -1,12 +1,12 @@
 import React from 'react'
 import BackButton from '../BackButton/BackButton'
-import { StrapiError } from '../../constants/strapi/Error'
 import { useTranslation } from 'react-i18next'
+import { ErrorProps } from '../../utils/strapi/helpers/response'
 
 type PageProps = {
     title?: string | null
     details?: {
-        strapi?: StrapiError
+        strapi?: ErrorProps
     }
 }
 

@@ -1,50 +1,28 @@
 import React from 'react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import i18nConfig from '../../next-i18next.config'
-import styles from './index.module.css'
-import Api from '../../constants/api'
+import strapi from '../../utils/strapi'
 import {
-    StrapiTutorialProps,
-    StrapiTutorialsResProps
-} from '../../constants/strapi/Tutorial'
+    TutorialProps,
+    TutorialsRes
+} from '../../utils/strapi/dataType/Tutorial'
+import styles from './index.module.css'
 import Error404 from '../../components/Errors/404'
 import TutorialCategory from '../../components/Tutorial/TutorialCategory'
 import TutorialMeta from '../../components/Tutorial/TutorialMeta'
-import { useTranslation } from 'react-i18next'
 import LoadingSpinner from '../../components/LoadingSpinner'
-import { localeMapping } from '../../constants/LocaleMapping'
 
 export const getStaticProps: GetStaticProps<{
-    res: StrapiTutorialsResProps
+    res: TutorialsRes
 }> = async (context) => {
     const locale: string = context.locale || 'en'
-    const localeForStrapi = localeMapping[locale]
-    const qs = new URLSearchParams()
-    qs.append(
-        `fields`,
-        [
-            'title',
-            'headline',
-            'updatedAt',
-            'publishedAt',
-            'scheduleToPublishAt'
-        ].join(',')
-    )
-    qs.append(
-        `populate`,
-        ['createdBy', 'tutorial_category', 'tutorial_tags'].join(',')
-    )
-    qs.append(`sort`, 'updatedAt:DESC')
-    qs.append(`locale`, localeForStrapi)
-    const res: StrapiTutorialsResProps = await Api.get(
-        `tutorials?${qs.toString()}`
-    )
     return {
         props: {
             ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
-            res
+            res: await strapi.tutorials.req({ locale })
         }
     }
 }
@@ -54,7 +32,7 @@ const TutorialCard = ({
     attributes
 }: {
     id: number
-    attributes: StrapiTutorialProps
+    attributes: TutorialProps
 }) => {
     return (
         <Link

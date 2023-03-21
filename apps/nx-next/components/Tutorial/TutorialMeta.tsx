@@ -1,12 +1,12 @@
 import React from 'react'
-import { Author } from '../../constants/strapi/Author'
 import styles from './meta.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAt } from '@fortawesome/free-solid-svg-icons'
 import Date from '../Date/date'
+import { UserProfile } from '../../utils/strapi/helpers/response'
 
 interface Props {
-    author?: Author
+    author?: UserProfile
     date?: string
 }
 
