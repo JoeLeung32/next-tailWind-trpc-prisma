@@ -20,16 +20,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
     return {
         paths: [
             {
-                params: { title: `Day 01 - Strapi run on Railway` }
+                locale: 'en',
+                params: {
+                    title: `Day 01 - Strapi run on Railway`
+                }
             },
             {
-                params: { title: `第一步：Strapi 在 Railway 上執行` }
+                locale: 'zh',
+                params: {
+                    title: `第一步：Strapi 在 Railway 上執行`
+                }
             }
         ],
         fallback: 'blocking'
     }
 }
-
 interface Output {
     res: TutorialsRes
 }
