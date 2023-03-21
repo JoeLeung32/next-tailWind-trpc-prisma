@@ -11,6 +11,7 @@ import Error404 from '../../components/Errors/404'
 import MDXContent from '../../components/MDX/MDXContent'
 import { useTranslation } from 'react-i18next'
 import LoadingSpinner from '../../components/LoadingSpinner'
+import { localeMapping } from '../../constants/LocaleMapping'
 
 interface ContentProps extends DataSubsetBaseWithAuthor {
     title: string
@@ -45,13 +46,16 @@ export const getStaticProps: GetStaticProps<{
     team: TeamMemberProps
 }> = async (context) => {
     const locale = context.locale || 'en'
-    const res: PageProps = await Api.get(`about-learnbook`)
+    const localeForStrapi = localeMapping[locale]
+    const res: PageProps = await Api.get(
+        `about-learnbook?locale=${localeForStrapi}`
+    )
     const team: TeamMemberProps = await Api.get(`team-members`)
     return {
         props: {
+            ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
             res,
-            team,
-            ...(await serverSideTranslations(locale, ['common'], i18nConfig))
+            team
         }
     }
 }

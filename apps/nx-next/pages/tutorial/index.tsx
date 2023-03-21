@@ -13,13 +13,14 @@ import Error404 from '../../components/Errors/404'
 import TutorialCategory from '../../components/Tutorial/TutorialCategory'
 import TutorialMeta from '../../components/Tutorial/TutorialMeta'
 import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/router'
 import LoadingSpinner from '../../components/LoadingSpinner'
+import { localeMapping } from '../../constants/LocaleMapping'
 
 export const getStaticProps: GetStaticProps<{
     res: StrapiTutorialsResProps
 }> = async (context) => {
-    const locale = context.locale || 'en'
+    const locale: string = context.locale || 'en'
+    const localeForStrapi = localeMapping[locale]
     const qs = new URLSearchParams()
     qs.append(
         `fields`,
@@ -36,6 +37,7 @@ export const getStaticProps: GetStaticProps<{
         ['createdBy', 'tutorial_category', 'tutorial_tags'].join(',')
     )
     qs.append(`sort`, 'updatedAt:DESC')
+    qs.append(`locale`, localeForStrapi)
     const res: StrapiTutorialsResProps = await Api.get(
         `tutorials?${qs.toString()}`
     )

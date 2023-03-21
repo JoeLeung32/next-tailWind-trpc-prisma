@@ -7,6 +7,7 @@ const TutorialCategory = ({
 }: {
     category: StrapiDataTutorialCategory
 }) => {
+    if (!category) return null
     const { id, attributes } = category
     return (
         <div key={id} className={styles.category}>

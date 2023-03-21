@@ -2,7 +2,7 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'react-i18next'
 
-const BackButton = ({ text }: { text?: string | undefined }) => {
+const BackButton = ({ text }: { text?: string | null }) => {
     const { t } = useTranslation()
     const router = useRouter()
     return (

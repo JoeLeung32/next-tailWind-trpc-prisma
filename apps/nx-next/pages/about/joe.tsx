@@ -11,6 +11,7 @@ import i18nConfig from '../../next-i18next.config'
 import { useTranslation } from 'react-i18next'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import BackButton from '../../components/BackButton/BackButton'
+import { localeMapping } from '../../constants/LocaleMapping'
 
 interface ContentProps extends DataSubsetBaseWithAuthor {
     title: string
@@ -28,7 +29,8 @@ export const getStaticProps: GetStaticProps<{
     res: PageProps
 }> = async (context) => {
     const locale = context.locale || 'en'
-    const res: PageProps = await Api.get(`about-joe`)
+    const localeForStrapi = localeMapping[locale]
+    const res: PageProps = await Api.get(`about-joe?locale=${localeForStrapi}`)
     return {
         props: {
             res,
