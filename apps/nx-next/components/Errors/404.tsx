@@ -1,6 +1,6 @@
 import React from 'react'
 import BackButton from '../BackButton/BackButton'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { ErrorProps } from '../../utils/strapi/helpers/response'
 
 type PageProps = {

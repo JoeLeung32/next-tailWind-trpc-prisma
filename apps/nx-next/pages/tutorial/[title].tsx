@@ -2,9 +2,8 @@ import React from 'react'
 import { ParsedUrlQuery } from 'querystring'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import i18nConfig from '../../next-i18next.config'
 import strapi from '../../utils/strapi'
 import { TutorialsRes } from '../../utils/strapi/dataType/Tutorial'
 import styles from './index.module.css'
@@ -53,7 +52,7 @@ export const getStaticProps: GetStaticProps<Output, Input> = async (
     return {
         revalidate: 60,
         props: {
-            ...(await serverSideTranslations(locale, ['common'], i18nConfig)),
+            ...(await serverSideTranslations(locale, ['common'])),
             res: await strapi.tutorial.req({ locale, title })
         }
     }
@@ -64,7 +63,7 @@ const TutorialArticle = (
 ) => {
     const { data, meta, error } = props.res
     const total = meta?.pagination?.total
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
     const [init, setInit] = React.useState(false)
     React.useEffect(() => {
         setInit(true)
