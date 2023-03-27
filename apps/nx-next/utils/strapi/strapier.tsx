@@ -6,7 +6,7 @@ interface LocaleMapping {
     [key: string]: string
 }
 
-const mapping: LocaleMapping = {
+const localeMapping: LocaleMapping = {
     en: 'en',
     zh: 'zh-Hant',
     'zh-HK': 'zh-Hant',
@@ -62,7 +62,9 @@ const strapier = {
             }
         }
     },
-    locale: (nextLocale: string) => mapping[nextLocale] || 'en'
+    locale: (nextLocale: string) => localeMapping[nextLocale] || 'en',
+    searchLocale: (locale: string) =>
+        Object.keys(localeMapping).find((key) => localeMapping[key] === locale)
 }
 
 export default strapier

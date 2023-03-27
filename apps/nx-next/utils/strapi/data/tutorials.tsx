@@ -1,6 +1,5 @@
 import { StrapiOperator } from '../helpers/request'
 import strapier from '../strapier'
-import process from 'process'
 
 interface Props {
     locale: string

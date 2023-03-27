@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import strapi from '../../utils/strapi'
+import strapier from '../../utils/strapi/strapier'
 import { TutorialsRes } from '../../utils/strapi/dataType/Tutorial'
 import styles from './index.module.css'
 import BackButton from '../../components/BackButton/BackButton'
@@ -15,27 +16,49 @@ import MDXContent from '../../components/MDX/MDXContent'
 import Error404 from '../../components/Errors/404'
 import LoadingSpinner from '../../components/LoadingSpinner'
 
-export const getStaticPaths: GetStaticPaths = async () => {
+interface CacheList {
+    locale: string
+    params: {
+        title: string
+    }
+}
+
+export const getStaticPaths: GetStaticPaths = async (context) => {
+    const BreakException = {}
+    const list: CacheList[] = []
+    const articles: TutorialsRes = await strapi.tutorialsCacheBuild.req()
+    if (articles.data && Array.isArray(articles.data)) {
+        try {
+            articles.data.forEach(({ attributes }) => {
+                if (typeof attributes.locale === undefined) throw BreakException
+                if (typeof attributes.title === undefined) throw BreakException
+                list.push({
+                    locale: strapier.searchLocale(attributes.locale) || 'en',
+                    params: { title: attributes.title }
+                })
+            })
+        } catch (e) {
+            if (e !== BreakException) throw e
+        }
+    }
+    if (list) {
+        return {
+            paths: list.map((item) => ({
+                locale: item.locale,
+                params: {
+                    ...item.params,
+                    title: encodeURIComponent(item.params.title)
+                }
+            })),
+            fallback: 'blocking'
+        }
+    }
     return {
-        paths: [
-            {
-                locale: 'en',
-                params: {
-                    title: `Day 01 - Strapi run on Railway`
-                }
-            },
-            {
-                locale: 'zh',
-                params: {
-                    title: encodeURIComponent(
-                        `第一步：Strapi 在 Railway 上執行`
-                    )
-                }
-            }
-        ],
+        paths: [],
         fallback: 'blocking'
     }
 }
+
 interface Output {
     res: TutorialsRes
 }
