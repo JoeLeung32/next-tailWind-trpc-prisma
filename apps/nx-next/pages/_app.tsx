@@ -7,6 +7,7 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 // -- React/Next
 import React from 'react'
+import i18nConfig from '../next-i18next.config'
 import { appWithTranslation } from 'next-i18next'
 import Router from 'next/router'
 import Head from 'next/head'
@@ -69,4 +70,4 @@ function WebApp({ Component, pageProps }: AppProps) {
     )
 }
 
-export default trpc.withTRPC(appWithTranslation(WebApp))
+export default trpc.withTRPC(appWithTranslation(WebApp, i18nConfig))

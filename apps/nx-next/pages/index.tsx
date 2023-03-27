@@ -1,13 +1,13 @@
 import React from 'react'
 import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import SsrTranslations from '../utils/SsrTranslations'
 import RoadWorkSign from '../components/RoadWorkAhead/roadWorkSign'
 
 export const getStaticProps: GetStaticProps = async (context) => {
     const locale = context.locale || 'en'
     return {
         props: {
-            ...(await serverSideTranslations(locale, ['common']))
+            ...(await SsrTranslations(locale, ['common']))
         }
     }
 }

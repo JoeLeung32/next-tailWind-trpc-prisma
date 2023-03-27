@@ -1,6 +1,11 @@
+.meta,
+.meta > .author,
+.meta > .publish {
+    @apply text-neutral-500;
+}
+
 .meta {
     @apply font-normal;
-    @apply text-neutral-300;
     @apply text-[10px];
     @apply flex;
     @apply flex-row;
@@ -10,7 +15,6 @@
 }
 
 .meta > .author {
-    @apply text-neutral-500;
     @apply text-sm;
     @apply text-ellipsis;
     @apply line-clamp-2;
@@ -19,7 +23,6 @@
 }
 
 .meta > .publish {
-    @apply text-neutral-500;
     @apply text-sm;
     @apply text-ellipsis;
     @apply line-clamp-2;

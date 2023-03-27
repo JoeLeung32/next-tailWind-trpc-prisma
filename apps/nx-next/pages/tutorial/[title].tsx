@@ -3,7 +3,7 @@ import { ParsedUrlQuery } from 'querystring'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import SsrTranslations from '../../utils/SsrTranslations'
 import strapi from '../../utils/strapi'
 import strapier from '../../utils/strapi/strapier'
 import { TutorialsRes } from '../../utils/strapi/dataType/Tutorial'
@@ -75,7 +75,7 @@ export const getStaticProps: GetStaticProps<Output, Input> = async (
     return {
         revalidate: 60,
         props: {
-            ...(await serverSideTranslations(locale, ['common'])),
+            ...(await SsrTranslations(locale, ['common'])),
             res: await strapi.tutorial.req({ locale, title })
         }
     }

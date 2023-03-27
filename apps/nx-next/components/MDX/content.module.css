@@ -11,3 +11,58 @@
     @apply shadow-neutral-500;
     @apply shadow-xl;
 }
+
+.mdxContent > h1,
+.mdxContent > h2,
+.mdxContent > h3,
+.mdxContent > h4,
+.mdxContent > h5,
+.mdxContent > h6 {
+    @apply flex;
+    @apply flex-wrap;
+    @apply flex-row;
+    @apply justify-start;
+    @apply items-center;
+    @apply gap-2;
+}
+
+.mdxContent .icon {
+    @apply bg-center;
+    @apply bg-contain;
+    @apply bg-no-repeat;
+    @apply block;
+    @apply bg-primary;
+    -webkit-mask-image: url("/static/icons/hash.svg");
+    mask-image: url("/static/icons/hash.svg");
+}
+
+
+.mdxContent > h1 > a > .icon {
+    @apply w-9;
+    @apply h-11;
+}
+
+.mdxContent > h2 > a > .icon {
+    @apply w-7;
+    @apply h-8;
+}
+
+.mdxContent > h3 > a > .icon {
+    @apply w-6;
+    @apply h-7;
+}
+
+.mdxContent > h4 > a > .icon {
+    @apply w-5;
+    @apply h-6;
+}
+
+.mdxContent > h5 > a > .icon {
+    @apply w-4;
+    @apply h-5;
+}
+
+.mdxContent > h6 > a > .icon {
+    @apply w-4;
+    @apply h-5;
+}

@@ -2,7 +2,7 @@ import React from 'react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import SsrTranslations from '../../utils/SsrTranslations'
 import strapi from '../../utils/strapi'
 import {
     TutorialProps,
@@ -20,7 +20,7 @@ export const getStaticProps: GetStaticProps<{
     const locale: string = context.locale || 'en'
     return {
         props: {
-            ...(await serverSideTranslations(locale, ['common'])),
+            ...(await SsrTranslations(locale, ['common'])),
             res: await strapi.tutorials.req({ locale })
         }
     }

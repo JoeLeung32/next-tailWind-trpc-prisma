@@ -1,6 +1,5 @@
 .main {
     @apply container;
-    @apply text-neutral-800;
     @apply mx-auto;
     @apply px-4;
     @apply py-2;
@@ -10,7 +9,6 @@
 }
 
 .pageTitle {
-    @apply text-neutral-700;
     @apply font-bold;
     @apply text-3xl;
     @apply mb-10;

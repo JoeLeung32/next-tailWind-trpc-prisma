@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './index.module.css'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import SsrTranslations from '../../utils/SsrTranslations'
 import strapi from '../../utils/strapi'
 import {
     AttributeBaseWithAuthor,
@@ -31,7 +31,7 @@ export const getStaticProps: GetStaticProps<{
     const locale = context.locale || 'en'
     return {
         props: {
-            ...(await serverSideTranslations(locale, ['common'])),
+            ...(await SsrTranslations(locale, ['common'])),
             res: await strapi.aboutJoe.req({ locale })
         }
     }

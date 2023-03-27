@@ -1,5 +1,5 @@
 .category {
-    @apply text-orange-600;
+    @apply text-white;
     @apply flex;
     @apply flex-row;
     @apply justify-start;
@@ -8,7 +8,7 @@
 }
 
 .category > span {
-    @apply bg-orange-50;
+    @apply bg-button;
     @apply font-bold;
     @apply text-xs;
     @apply rounded-lg;
