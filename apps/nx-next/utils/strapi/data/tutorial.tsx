@@ -30,11 +30,12 @@ const query = async (props: Props) => {
             'localizations',
             'tutorial_category',
             'tutorial_tags'
-        ],
-        sort: ['updatedAt:DESC']
+        ]
     }
     const qp = strapier.qs(qs)
     qp.append(`filters[title][$eqi]`, title)
+    qp.append(`filters[scheduleToPublishAt][$lte]`, new Date().toISOString())
+    qp.append(`filters[publishedAt][$lte]`, new Date().toISOString())
     const url = `/tutorials?${qp.toString()}`
     return (tutorial.res = await strapier.fetch(url))
 }

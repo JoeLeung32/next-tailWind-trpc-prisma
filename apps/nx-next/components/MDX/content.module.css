@@ -12,18 +12,24 @@
     @apply shadow-xl;
 }
 
+.mdxContent .heading,
 .mdxContent > h1,
 .mdxContent > h2,
 .mdxContent > h3,
 .mdxContent > h4,
 .mdxContent > h5,
 .mdxContent > h6 {
-    @apply flex;
-    @apply flex-wrap;
-    @apply flex-row;
-    @apply justify-start;
-    @apply items-center;
-    @apply gap-2;
+    @apply block;
+}
+
+.mdxContent .heading > a,
+.mdxContent > h1 > a,
+.mdxContent > h2 > a,
+.mdxContent > h3 > a,
+.mdxContent > h4 > a,
+.mdxContent > h5 > a,
+.mdxContent > h6 > a {
+    @apply inline-block;
 }
 
 .mdxContent .icon {
@@ -32,37 +38,53 @@
     @apply bg-no-repeat;
     @apply block;
     @apply bg-primary;
-    -webkit-mask-image: url("/static/icons/hash.svg");
+    @apply relative;
+    @apply top-0.5;
+    @apply lg:mr-1;
     mask-image: url("/static/icons/hash.svg");
+    mask-repeat: no-repeat;
 }
 
 
 .mdxContent > h1 > a > .icon {
-    @apply w-9;
-    @apply h-11;
+    @apply w-6;
+    @apply h-6;
+    @apply lg:w-9;
+    @apply lg:h-9;
 }
 
+.mdxContent > .heading .icon,
 .mdxContent > h2 > a > .icon {
-    @apply w-7;
-    @apply h-8;
+    @apply w-5;
+    @apply h-5;
+    @apply lg:w-8;
+    @apply lg:h-8;
 }
 
 .mdxContent > h3 > a > .icon {
-    @apply w-6;
-    @apply h-7;
+    @apply w-4;
+    @apply h-4;
+    @apply lg:w-7;
+    @apply lg:h-7;
 }
 
 .mdxContent > h4 > a > .icon {
-    @apply w-5;
-    @apply h-6;
+    @apply w-3.5;
+    @apply h-3.5;
+    @apply lg:w-6;
+    @apply lg:h-6;
 }
 
 .mdxContent > h5 > a > .icon {
-    @apply w-4;
-    @apply h-5;
+    @apply w-3;
+    @apply h-3;
+    @apply lg:w-5;
+    @apply lg:h-5;
 }
 
 .mdxContent > h6 > a > .icon {
-    @apply w-4;
-    @apply h-5;
+    @apply w-2.5;
+    @apply h-2.5;
+    @apply lg:w-4;
+    @apply lg:h-4;
 }

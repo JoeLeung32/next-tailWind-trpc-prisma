@@ -111,8 +111,11 @@ const TutorialArticle = (
                             />
                             <h1>{attributes.title}</h1>
                             <TutorialMeta
-                                author={attributes?.updatedBy}
-                                date={attributes.publishedAt}
+                                author={attributes?.createdBy}
+                                date={
+                                    attributes.scheduleToPublishAt ||
+                                    attributes.publishedAt
+                                }
                             />
                             <TutorialTags
                                 tags={attributes.tutorial_tags.data}

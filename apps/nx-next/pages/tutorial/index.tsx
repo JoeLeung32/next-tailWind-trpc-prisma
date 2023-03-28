@@ -48,8 +48,10 @@ const TutorialCard = ({
             <div className={styles.headline}>{attributes.headline}</div>
             <div className={`my-3`}>
                 <TutorialMeta
-                    author={attributes?.updatedBy}
-                    date={attributes.publishedAt}
+                    author={attributes?.createdBy}
+                    date={
+                        attributes.scheduleToPublishAt || attributes.publishedAt
+                    }
                 />
             </div>
         </Link>
