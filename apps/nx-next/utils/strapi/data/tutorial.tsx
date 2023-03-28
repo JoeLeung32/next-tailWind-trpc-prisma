@@ -14,6 +14,7 @@ const tutorial = {
 }
 
 const query = async (props: Props) => {
+    const dt = new Date().toISOString()
     const nextLocale = props.locale || 'en'
     const title = props.title
     const qs: StrapiOperator = {
@@ -34,8 +35,8 @@ const query = async (props: Props) => {
     }
     const qp = strapier.qs(qs)
     qp.append(`filters[title][$eqi]`, title)
-    qp.append(`filters[scheduleToPublishAt][$lte]`, new Date().toISOString())
-    qp.append(`filters[publishedAt][$lte]`, new Date().toISOString())
+    qp.append(`filters[scheduleToPublishAt][$lte]`, dt)
+    qp.append(`filters[publishedAt][$lte]`, dt)
     const url = `/tutorials?${qp.toString()}`
     return (tutorial.res = await strapier.fetch(url))
 }

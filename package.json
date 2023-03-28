@@ -2,7 +2,11 @@
   "name": "next-tailwind-trpc-prisma",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "learn:serve": "nx run nx-next:serve",
+    "learn:build": "rm -rf ./dist/apps/nx-next/ && nx run nx-next:build",
+    "learn:start": "nx run nx-next:serve --prod"
+  },
   "private": true,
   "prisma": {
     "schema": "libs/prisma/schema.prisma",
