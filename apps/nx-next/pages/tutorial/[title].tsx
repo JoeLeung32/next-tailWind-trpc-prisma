@@ -95,39 +95,33 @@ const TutorialArticle = (
     if (data && data.length && total) {
         const { id, attributes } = data[0]
         return (
-            <>
+            <main className={`${styles.main} mb-20`}>
                 <Head>
                     <title>{attributes.title}</title>
                     <meta name={`description`} content={attributes.headline} />
                 </Head>
-                <main className={`${styles.main} mb-20`}>
-                    <BackButton text={t('Back to tutorial')} />
-                    <article className={styles.article}>
-                        <div
-                            className={`${styles.pageTitle} ${styles.pageHead}`}
-                        >
-                            <TutorialCategory
-                                category={attributes.tutorial_category.data}
-                            />
-                            <h1>{attributes.title}</h1>
-                            <TutorialMeta
-                                author={attributes?.createdBy}
-                                date={
-                                    attributes.scheduleToPublishAt ||
-                                    attributes.publishedAt
-                                }
-                            />
-                            <TutorialTags
-                                tags={attributes.tutorial_tags.data}
-                            />
-                        </div>
-                        {attributes.content && (
-                            <MDXContent content={attributes.content} />
-                        )}
-                    </article>
-                    <BackButton text={t('Back to tutorial')} />
-                </main>
-            </>
+                <BackButton text={t('Back to tutorial')} />
+                <article className={styles.article}>
+                    <div className={`${styles.pageTitle} ${styles.pageHead}`}>
+                        <TutorialCategory
+                            category={attributes.tutorial_category.data}
+                        />
+                        <h1>{attributes.title}</h1>
+                        <TutorialMeta
+                            author={attributes?.createdBy}
+                            date={
+                                attributes.scheduleToPublishAt ||
+                                attributes.publishedAt
+                            }
+                        />
+                        <TutorialTags tags={attributes.tutorial_tags.data} />
+                    </div>
+                    {attributes.content && (
+                        <MDXContent content={attributes.content} />
+                    )}
+                </article>
+                <BackButton text={t('Back to tutorial')} />
+            </main>
         )
     }
     return (

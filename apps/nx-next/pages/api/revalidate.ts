@@ -9,7 +9,9 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const pages: string[] = ['/en/tutorial', '/zh/tutorial']
+    const pages: string[] = ['/tutorial', '/about', '/about/joe']
+        .map((path: string) => [`/en${path}`, `/zh${path}`])
+        .flat()
 
     if (req.query.secret !== process.env.REVALIDATE_TOKEN) {
         return res.status(401).json({ message: 'Invalid token' })

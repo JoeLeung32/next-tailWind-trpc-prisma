@@ -1,5 +1,6 @@
 import React from 'react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useTranslation } from 'next-i18next'
 import SsrTranslations from '../../utils/SsrTranslations'
@@ -71,6 +72,10 @@ const TutorialIndex = (
     if (data) {
         return (
             <main className={`${styles.main} mb-6`}>
+                <Head>
+                    <title>{t(`Tutorial`)}</title>
+                    <meta name={`description`} content={t(`Tutorial`) || ''} />
+                </Head>
                 <div className={styles.pageTitle}>
                     <h1>{t('Tutorial')}</h1>
                 </div>
