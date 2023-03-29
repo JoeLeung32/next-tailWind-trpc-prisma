@@ -29,6 +29,7 @@
     "@trpc/next": "10.18.0",
     "@trpc/react-query": "10.18.0",
     "@trpc/server": "10.18.0",
+    "@vercel/og": "0.4.2",
     "date-fns": "2.29.3",
     "hast-util-to-string": "^2.0.0",
     "hastscript": "^7.2.0",

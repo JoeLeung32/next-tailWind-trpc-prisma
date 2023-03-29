@@ -84,6 +84,7 @@ export const getStaticProps: GetStaticProps<Output, Input> = async (
 const TutorialArticle = (
     props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
+    const qs = new URLSearchParams()
     const { data, meta, error } = props.res
     const total = meta?.pagination?.total
     const { t, i18n } = useTranslation()
@@ -94,6 +95,8 @@ const TutorialArticle = (
     if (!init) return <LoadingSpinner />
     if (data && data.length && total) {
         const { id, attributes } = data[0]
+        qs.append(`header`, attributes.title)
+        qs.append(`headline`, attributes.headline)
         return (
             <main className={`${styles.main} mb-20`}>
                 <Head>
@@ -101,6 +104,7 @@ const TutorialArticle = (
                     <meta name={`description`} content={attributes.headline} />
                 </Head>
                 <BackButton text={t('Back to tutorial')} />
+                <img src={`/api/og?${qs.toString()}`} />
                 <article className={styles.article}>
                     <div className={`${styles.pageTitle} ${styles.pageHead}`}>
                         <TutorialCategory
