@@ -21,6 +21,7 @@ const query = async (props: Props) => {
         locale: strapier.locale(nextLocale),
         fields: [
             'title',
+            'headline',
             'content',
             'updatedAt',
             'publishedAt',
