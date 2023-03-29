@@ -71,13 +71,13 @@
     @apply text-neutral-600;
     @apply text-base;
     @apply text-ellipsis;
-    @apply line-clamp-3;
+    /*@apply line-clamp-3;*/
     @apply pr-10;
     /*noinspection CssUnresolvedCustomProperty*/
     font-family: var(--font-inter);
 }
 html[lang="zh"] .postCard > .headline {
-    @apply line-clamp-2;
+    /*@apply line-clamp-2;*/
 }
 
 .article .pageHead {
