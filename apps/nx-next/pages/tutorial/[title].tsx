@@ -142,14 +142,14 @@ const TutorialArticle = (
                 <Head>
                     <title>{attributes.title}</title>
                     <meta name={`description`} content={attributes.headline} />
-                    <meta name="og:site_name" content={`Learnbook`} />
-                    <meta property="og:title" content={attributes.title} />
+                    <meta name={`og:site_name`} content={`Learnbook`} />
+                    <meta property={`og:title`} content={attributes.title} />
                     <meta
-                        property="og:description"
+                        property={`og:description`}
                         content={attributes.headline}
                     />
                     <meta
-                        property="og:image"
+                        property={`og:image`}
                         content={`${
                             typeof window !== 'undefined'
                                 ? window.location.origin
