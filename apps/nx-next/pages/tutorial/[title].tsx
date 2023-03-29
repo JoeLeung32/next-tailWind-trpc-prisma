@@ -150,7 +150,11 @@ const TutorialArticle = (
                     />
                     <meta
                         property="og:image"
-                        content={`/api/og/tutorial?t=${new Date().getTime()}&${qs.toString()}`}
+                        content={`${
+                            typeof window !== 'undefined'
+                                ? window.location.origin
+                                : ''
+                        }/api/og/tutorial?t=${new Date().getTime()}&${qs.toString()}`}
                     />
                 </Head>
             )
