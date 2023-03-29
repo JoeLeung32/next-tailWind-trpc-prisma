@@ -7,6 +7,7 @@ import SsrTranslations from '../../utils/SsrTranslations'
 import strapi from '../../utils/strapi'
 import strapier from '../../utils/strapi/strapier'
 import { TutorialsRes } from '../../utils/strapi/dataType/Tutorial'
+import { UserProfile } from '../../utils/strapi/helpers/response'
 import styles from './index.module.css'
 import BackButton from '../../components/BackButton/BackButton'
 import TutorialCategory from '../../components/Tutorial/TutorialCategory'
@@ -15,6 +16,7 @@ import TutorialTags from '../../components/Tutorial/TutorialTags'
 import MDXContent from '../../components/MDX/MDXContent'
 import Error404 from '../../components/Errors/404'
 import LoadingSpinner from '../../components/LoadingSpinner'
+import { format } from 'date-fns'
 
 interface CacheList {
     locale: string
@@ -81,10 +83,44 @@ export const getStaticProps: GetStaticProps<Output, Input> = async (
     }
 }
 
+interface OGImage {
+    title: string
+    headline: string
+    createdBy: UserProfile
+    scheduleToPublishAt: Date
+    publishedAt: Date
+    tutorial_tags: {
+        data: TutorialTags[]
+    }
+}
+
+const ogImage = (attributes: OGImage) => {
+    const qs = new URLSearchParams()
+    qs.append(`header`, attributes.title)
+    qs.append(`headline`, attributes.headline)
+    qs.append(
+        `createdBy`,
+        `${attributes?.createdBy.firstname} ${attributes?.createdBy.lastname}`
+    )
+    if (attributes.scheduleToPublishAt || attributes.publishedAt) {
+        const dateTimeFormat: Date =
+            attributes.scheduleToPublishAt || attributes.publishedAt
+        qs.append(`publishedAt`, format(dateTimeFormat, 'LLL d, yyyy'))
+    }
+    if (attributes.tutorial_tags.data) {
+        qs.append(
+            `tags`,
+            attributes.tutorial_tags.data
+                .map(({ attributes }) => attributes.name)
+                .join(',')
+        )
+    }
+    return qs
+}
+
 const TutorialArticle = (
     props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
-    const qs = new URLSearchParams()
     const { data, meta, error } = props.res
     const total = meta?.pagination?.total
     const { t, i18n } = useTranslation()
@@ -95,16 +131,32 @@ const TutorialArticle = (
     if (!init) return <LoadingSpinner />
     if (data && data.length && total) {
         const { id, attributes } = data[0]
-        qs.append(`header`, attributes.title)
-        qs.append(`headline`, attributes.headline)
+        // og:image START
+        const qs = ogImage({
+            title: attributes.title,
+            headline: attributes.headline,
+            createdBy: attributes.createdBy,
+            scheduleToPublishAt: new Date(attributes.scheduleToPublishAt || ''),
+            publishedAt: new Date(attributes.publishedAt || ''),
+            tutorial_tags: attributes.tutorial_tags
+        })
+        // og:image END
         return (
             <main className={`${styles.main} mb-20`}>
                 <Head>
                     <title>{attributes.title}</title>
                     <meta name={`description`} content={attributes.headline} />
+                    <meta property="og:title" content={attributes.title} />
+                    <meta
+                        property="og:description"
+                        content={attributes.headline}
+                    />
+                    <meta
+                        property="og:image"
+                        content={`/api/og/tutorial?t=${new Date().getTime()}&${qs.toString()}`}
+                    />
                 </Head>
                 <BackButton text={t('Back to tutorial')} />
-                <img src={`/api/og?${qs.toString()}`} />
                 <article className={styles.article}>
                     <div className={`${styles.pageTitle} ${styles.pageHead}`}>
                         <TutorialCategory

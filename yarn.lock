@@ -2657,7 +2657,7 @@
     "@typescript-eslint/types" "5.56.0"
     eslint-visitor-keys "^3.3.0"
 
-"@vercel/og@^0.4.2":
+"@vercel/og@0.4.2":
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/@vercel/og/-/og-0.4.2.tgz#f7377dbe8a54b2f83fd9ffcb489f13abf5ec8f62"
   integrity sha512-4xKdui9JChatNwh/fAKk/pzoKHn4Cb6aAmXihVhyRKtPnTBZN7Z+eBtgFuvnV9IfvDqYB6BQmKg6G+CBmPU4ew==
