@@ -27,7 +27,12 @@ const Error404 = ({ title, details }: PageProps) => {
                 {details && details.strapi && (
                     <div className={`flex text-xs`}>
                         <div className={`p-2 px-4 bg-gray-200 rounded-xl`}>
-                            <pre>{JSON.stringify(details.strapi, null, 4)}</pre>
+                            <pre
+                                className={`overflow-x-auto`}
+                                style={{ maxWidth: 'calc(100vw - 12vw)' }}
+                            >
+                                {JSON.stringify(details.strapi, null, 4)}
+                            </pre>
                         </div>
                     </div>
                 )}

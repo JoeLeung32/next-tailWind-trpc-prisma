@@ -28,12 +28,26 @@ const strapier = {
     },
     fetch: async (path: string) => {
         const input = `${process.env.STRAPI_API_URL}${path}`
-        const res = await fetch(input, {
-            headers: {
-                Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`
+        try {
+            const res = await fetch(input, {
+                headers: {
+                    Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`
+                }
+            })
+            return await res.json()
+        } catch (e) {
+            return {
+                data: [],
+                error: {
+                    status: 404,
+                    name: 'FetchFailed',
+                    message: 'Error: fetch failed',
+                    details: {
+                        path
+                    }
+                }
             }
-        })
-        return await res.json()
+        }
     },
     formatter: {
         getData: ({ data }: StrapiResProps) => {
