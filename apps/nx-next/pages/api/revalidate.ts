@@ -16,14 +16,34 @@ export default async function handler(
     }
 
     try {
-        const tutorials = await tutorialList()
-        const list: string[] = [...pages, ...tutorials].sort()
-
-        list.map(async (path) => {
+        const revalidation = async (path: string) => {
+            const from = new Date().getTime()
             await res.revalidate(path)
-        })
+            const end = new Date().getTime()
+            return {
+                path,
+                used: end - from
+            }
+        }
+
+        const tutorials = await tutorialList()
+
+        const completed = {
+            pages: await Promise.all(
+                pages.map(async (path) => {
+                    return await revalidation(path)
+                })
+            ),
+            tutorials: await Promise.all(
+                tutorials.map(async (path) => {
+                    return await revalidation(path)
+                })
+            )
+        }
+
         return res.json({
-            revalidated: true
+            revalidated: true,
+            completed
         })
     } catch (err) {
         return res.status(500).send('Error revalidating')
