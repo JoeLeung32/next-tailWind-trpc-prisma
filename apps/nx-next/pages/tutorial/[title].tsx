@@ -123,29 +123,26 @@ const TutorialArticle = (
 ) => {
     const { data, meta, error } = props.res
     const total = meta?.pagination?.total
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
     const [init, setInit] = React.useState(false)
-    React.useEffect(() => {
-        setInit(true)
-    }, [])
-    if (!init) return <LoadingSpinner />
-    if (data && data.length && total) {
-        const { id, attributes } = data[0]
-        // og:image START
-        const qs = ogImage({
-            title: attributes.title,
-            headline: attributes.headline,
-            createdBy: attributes.createdBy,
-            scheduleToPublishAt: new Date(attributes.scheduleToPublishAt || ''),
-            publishedAt: new Date(attributes.publishedAt || ''),
-            tutorial_tags: attributes.tutorial_tags
-        })
-        // og:image END
-        return (
-            <main className={`${styles.main} mb-20`}>
+    const HTMLHead = () => {
+        if (data && data.length && total) {
+            const { attributes } = data[0]
+            const qs = ogImage({
+                title: attributes.title,
+                headline: attributes.headline,
+                createdBy: attributes.createdBy,
+                scheduleToPublishAt: new Date(
+                    attributes.scheduleToPublishAt || ''
+                ),
+                publishedAt: new Date(attributes.publishedAt || ''),
+                tutorial_tags: attributes.tutorial_tags
+            })
+            return (
                 <Head>
                     <title>{attributes.title}</title>
                     <meta name={`description`} content={attributes.headline} />
+                    <meta name="og:site_name" content={`Learnbook`} />
                     <meta property="og:title" content={attributes.title} />
                     <meta
                         property="og:description"
@@ -156,6 +153,28 @@ const TutorialArticle = (
                         content={`/api/og/tutorial?t=${new Date().getTime()}&${qs.toString()}`}
                     />
                 </Head>
+            )
+        }
+        return (
+            <Head>
+                <title></title>
+            </Head>
+        )
+    }
+    React.useEffect(() => {
+        setInit(true)
+    }, [])
+    if (!init)
+        return (
+            <LoadingSpinner>
+                <HTMLHead />
+            </LoadingSpinner>
+        )
+    if (data && data.length && total) {
+        const { id, attributes } = data[0]
+        return (
+            <main className={`${styles.main} mb-20`}>
+                <HTMLHead />
                 <BackButton text={t('Back to tutorial')} />
                 <article className={styles.article}>
                     <div className={`${styles.pageTitle} ${styles.pageHead}`}>
