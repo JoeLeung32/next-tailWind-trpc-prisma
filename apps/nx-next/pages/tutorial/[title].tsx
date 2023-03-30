@@ -154,7 +154,9 @@ const TutorialArticle = (
                             typeof window !== 'undefined'
                                 ? window.location.origin
                                 : ''
-                        }/api/og/tutorial?t=${new Date().getTime()}&${qs.toString()}`}
+                        }/api/og/tutorial?t=${new Date(
+                            attributes.updatedAt || attributes.createdAt
+                        ).getTime()}&${qs.toString()}`}
                     />
                 </Head>
             )

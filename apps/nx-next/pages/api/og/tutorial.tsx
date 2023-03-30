@@ -68,9 +68,6 @@ const handler: NextApiHandler = async (
                                     <div
                                         key={index}
                                         tw={`my-3 px-5 py-1 bg-gray-200 rounded-2xl`}
-                                        style={{
-                                            fontFamily: '"nunito-light"'
-                                        }}
                                     >
                                         {tag}
                                     </div>
@@ -79,12 +76,16 @@ const handler: NextApiHandler = async (
                     </div>
                     <div
                         tw={`bg-transparent text-teal-50 flex flex-row justify-between items-center pt-3 text-3xl`}
+                        style={{ fontFamily: '"nunito-bold"' }}
                     >
                         <div tw={`flex flex-row pl-8 justify-start items-end`}>
                             <div>{createdBy}</div>
-                            <div tw={`ml-2 pb-1 text-sm`}>{publishedAt}</div>
+                            <div tw={`flex text-xl uppercase`}>
+                                <div tw={`mx-2`}>//</div>
+                                <div>{publishedAt}</div>
+                            </div>
                         </div>
-                        <div tw={`flex text-xl pr-8`}>learn.chunkit.hk</div>
+                        <div tw={`flex text-2xl pr-8`}>learn.chunkit.hk</div>
                     </div>
                 </div>
             ),
