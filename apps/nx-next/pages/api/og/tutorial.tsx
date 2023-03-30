@@ -26,7 +26,7 @@ const handler: NextApiHandler = async (
         return new ImageResponse(
             (
                 <div
-                    tw={`bg-teal-700 flex flex-col w-full h-full p-3`}
+                    tw={`bg-teal-700 flex flex-col w-full h-full p-8 pb-4`}
                     style={{
                         backgroundImage:
                             'linear-gradient(to right, #ec4899, #ef4444, #eab308)',
@@ -36,7 +36,7 @@ const handler: NextApiHandler = async (
                     }}
                 >
                     <div
-                        tw={`bg-white flex flex-row flex-1 rounded-3xl overflow-hidden`}
+                        tw={`bg-white flex flex-row flex-1 rounded-3xl overflow-hidden shadow-xl`}
                     >
                         <div
                             tw={`flex flex-col flex-1 justify-start items-start p-12`}
@@ -80,12 +80,11 @@ const handler: NextApiHandler = async (
                     <div
                         tw={`bg-transparent text-teal-50 flex flex-row justify-between items-center pt-3 text-3xl`}
                     >
-                        <div tw={`flex flex-row pl-12`}>
+                        <div tw={`flex flex-row pl-8 justify-start items-end`}>
                             <div>{createdBy}</div>
-                            <div tw={`mx-3`}>@</div>
-                            <div>{publishedAt}</div>
+                            <div tw={`ml-2 pb-1 text-sm`}>{publishedAt}</div>
                         </div>
-                        <div tw={`flex text-xl pr-6`}>learn.chunkit.hk</div>
+                        <div tw={`flex text-xl pr-8`}>learn.chunkit.hk</div>
                     </div>
                 </div>
             ),
