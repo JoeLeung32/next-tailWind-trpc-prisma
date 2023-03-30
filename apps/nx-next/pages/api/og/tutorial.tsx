@@ -25,60 +25,67 @@ const handler: NextApiHandler = async (
         const publishedAt = qs('publishedAt')
         return new ImageResponse(
             (
-                <div tw={`bg-teal-700 flex w-full h-full p-3`}>
+                <div
+                    tw={`bg-teal-700 flex flex-col w-full h-full p-3`}
+                    style={{
+                        backgroundImage:
+                            'linear-gradient(to right, #ec4899, #ef4444, #eab308)',
+                        backgroundPosition: '0 0, 50% 50%, 0 0',
+                        backgroundSize: '100% 100%',
+                        backgroundRepeat: 'no-repeat'
+                    }}
+                >
                     <div
-                        tw={`flex flex-col rounded-3xl overflow-hidden w-full h-full`}
+                        tw={`bg-white flex flex-row flex-1 rounded-3xl overflow-hidden`}
                     >
-                        <div tw={`bg-white flex flex-row flex-1`}>
+                        <div
+                            tw={`flex flex-col flex-1 justify-start items-start p-12`}
+                        >
                             <div
-                                tw={`flex flex-col flex-1 justify-start items-start p-12`}
+                                tw={`uppercase text-4xl`}
+                                style={{ fontFamily: '"nunito-light"' }}
                             >
-                                <div
-                                    tw={`uppercase text-4xl`}
-                                    style={{ fontFamily: '"nunito-light"' }}
-                                >
-                                    Learnbook
-                                </div>
-                                <div
-                                    tw={`tracking-wide text-6xl my-6`}
-                                    style={{ fontFamily: '"nunito-bold"' }}
-                                >
-                                    {header}
-                                </div>
-                                <div
-                                    tw={`flex tracking-wider text-3xl mb-6`}
-                                    style={{ fontFamily: '"nunito-light"' }}
-                                >
-                                    {headline}
-                                </div>
+                                Learnbook
                             </div>
                             <div
-                                tw={`flex flex-col justify-start items-center p-12 tracking-wider text-lg`}
+                                tw={`tracking-wide text-6xl my-6`}
+                                style={{ fontFamily: '"nunito-bold"' }}
                             >
-                                {tags &&
-                                    tags.split(',').map((tag, index) => (
-                                        <div
-                                            key={index}
-                                            tw={`my-3 px-5 py-1 bg-gray-200 rounded-2xl`}
-                                            style={{
-                                                fontFamily: '"nunito-light"'
-                                            }}
-                                        >
-                                            {tag}
-                                        </div>
-                                    ))}
+                                {header}
+                            </div>
+                            <div
+                                tw={`flex tracking-wider text-3xl mb-6`}
+                                style={{ fontFamily: '"nunito-light"' }}
+                            >
+                                {headline}
                             </div>
                         </div>
                         <div
-                            tw={`bg-transparent text-teal-50 flex flex-row justify-between items-center pt-3 text-3xl`}
+                            tw={`flex flex-col justify-start items-center p-12 tracking-wider text-lg`}
                         >
-                            <div tw={`flex flex-row pl-12`}>
-                                <div>{createdBy}</div>
-                                <div tw={`mx-3`}>@</div>
-                                <div>{publishedAt}</div>
-                            </div>
-                            <div tw={`flex text-xl pr-6`}>learn.chunkit.hk</div>
+                            {tags &&
+                                tags.split(',').map((tag, index) => (
+                                    <div
+                                        key={index}
+                                        tw={`my-3 px-5 py-1 bg-gray-200 rounded-2xl`}
+                                        style={{
+                                            fontFamily: '"nunito-light"'
+                                        }}
+                                    >
+                                        {tag}
+                                    </div>
+                                ))}
                         </div>
+                    </div>
+                    <div
+                        tw={`bg-transparent text-teal-50 flex flex-row justify-between items-center pt-3 text-3xl`}
+                    >
+                        <div tw={`flex flex-row pl-12`}>
+                            <div>{createdBy}</div>
+                            <div tw={`mx-3`}>@</div>
+                            <div>{publishedAt}</div>
+                        </div>
+                        <div tw={`flex text-xl pr-6`}>learn.chunkit.hk</div>
                     </div>
                 </div>
             ),
