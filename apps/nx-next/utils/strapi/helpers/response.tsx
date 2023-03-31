@@ -28,7 +28,8 @@ export interface AttributeBaseWithAuthor extends AttributeBase {
 export interface UserProfile {
     id: number
     firstname: string
-    lastname: string
+    lastname?: string
+    username?: string
 }
 
 export interface ErrorProps {

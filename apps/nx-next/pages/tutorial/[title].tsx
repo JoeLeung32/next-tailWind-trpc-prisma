@@ -92,12 +92,15 @@ interface OGImage {
     tutorial_tags: {
         data: TutorialTags[]
     }
+    urlDatetime: string
 }
 
 const ogImage = (attributes: OGImage) => {
     const qs = new URLSearchParams()
+    qs.append(`t`, attributes.urlDatetime)
     qs.append(`header`, attributes.title)
     qs.append(`headline`, attributes.headline)
+    qs.append(`username`, attributes?.createdBy.username || '')
     qs.append(
         `createdBy`,
         `${attributes?.createdBy.firstname} ${attributes?.createdBy.lastname}`
@@ -136,7 +139,8 @@ const TutorialArticle = (
                     attributes.scheduleToPublishAt || ''
                 ),
                 publishedAt: new Date(attributes.publishedAt || ''),
-                tutorial_tags: attributes.tutorial_tags
+                tutorial_tags: attributes.tutorial_tags,
+                urlDatetime: attributes.updatedAt || attributes.createdAt
             })
             return (
                 <Head>
@@ -154,9 +158,7 @@ const TutorialArticle = (
                             typeof window !== 'undefined'
                                 ? window.location.origin
                                 : ''
-                        }/api/og/tutorial?t=${new Date(
-                            attributes.updatedAt || attributes.createdAt
-                        ).getTime()}&${qs.toString()}`}
+                        }/api/og/tutorial?${qs.toString()}`}
                     />
                 </Head>
             )

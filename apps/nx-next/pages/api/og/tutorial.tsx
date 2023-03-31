@@ -20,6 +20,7 @@ const handler: NextApiHandler = async (
     try {
         const header = qs('header')
         const headline = qs('headline')
+        const username = qs('username')
         const tags = qs('tags')
         const createdBy = qs('createdBy')
         const publishedAt = qs('publishedAt')
@@ -36,42 +37,54 @@ const handler: NextApiHandler = async (
                     }}
                 >
                     <div
-                        tw={`bg-white flex flex-row flex-1 rounded-3xl overflow-hidden shadow-xl`}
+                        tw={`bg-white flex flex-col flex-1 rounded-3xl overflow-hidden shadow-xl`}
                     >
-                        <div
-                            tw={`flex flex-col flex-1 justify-start items-start p-12`}
-                        >
+                        <div tw={`flex flex-row flex-1 px-12 pt-12`}>
                             <div
-                                tw={`uppercase text-4xl`}
-                                style={{ fontFamily: '"nunito-light"' }}
+                                tw={`flex flex-col flex-1 justify-start items-start pr-12`}
                             >
-                                Learnbook
+                                <div
+                                    tw={`uppercase text-2xl`}
+                                    style={{ fontFamily: '"nunito-bold"' }}
+                                >
+                                    Learnbook
+                                </div>
+                                <div
+                                    tw={`text-6xl my-3`}
+                                    style={{ fontFamily: '"nunito-bold"' }}
+                                >
+                                    {header}
+                                </div>
+                                <div
+                                    tw={`flex text-3xl mb-6`}
+                                    style={{ fontFamily: '"nunito-light"' }}
+                                >
+                                    {headline}
+                                </div>
+                                <div tw={`flex flex-row`}>
+                                    {tags &&
+                                        tags.split(',').map((tag, index) => (
+                                            <div
+                                                key={index}
+                                                tw={`mr-3 px-5 py-1 bg-gray-200 rounded-2xl text-lg`}
+                                            >
+                                                {tag}
+                                            </div>
+                                        ))}
+                                </div>
                             </div>
                             <div
-                                tw={`tracking-wide text-6xl my-6`}
-                                style={{ fontFamily: '"nunito-bold"' }}
+                                tw={`flex flex-col justify-start items-center`}
                             >
-                                {header}
+                                {username && username.length && (
+                                    <img
+                                        width={256}
+                                        height={256}
+                                        src={`https://github.com/${username}.png`}
+                                        tw={`rounded-full`}
+                                    />
+                                )}
                             </div>
-                            <div
-                                tw={`flex tracking-wider text-3xl mb-6`}
-                                style={{ fontFamily: '"nunito-light"' }}
-                            >
-                                {headline}
-                            </div>
-                        </div>
-                        <div
-                            tw={`flex flex-col justify-start items-center p-12 tracking-wider text-lg`}
-                        >
-                            {tags &&
-                                tags.split(',').map((tag, index) => (
-                                    <div
-                                        key={index}
-                                        tw={`my-3 px-5 py-1 bg-gray-200 rounded-2xl`}
-                                    >
-                                        {tag}
-                                    </div>
-                                ))}
                         </div>
                     </div>
                     <div
@@ -81,7 +94,8 @@ const handler: NextApiHandler = async (
                         <div tw={`flex flex-row pl-8 justify-start items-end`}>
                             <div>{createdBy}</div>
                             <div tw={`flex text-xl uppercase`}>
-                                <div tw={`mx-2`}>//</div>
+                                <div tw={`ml-2`}>/</div>
+                                <div tw={`mr-2`}>/</div>
                                 <div>{publishedAt}</div>
                             </div>
                         </div>
